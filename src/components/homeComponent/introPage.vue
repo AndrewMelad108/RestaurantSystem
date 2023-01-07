@@ -1,0 +1,76 @@
+<template>
+  <div class="intro">
+    <section class="intro-restaurant text-center">
+      <p class="lead intro-restaurant-des">
+        If you would like to see the restaurants of the guest and know more
+        about the restaurants and their places and their restaurants, click on
+        Show
+        <button
+          class="intro-restaurant-btn btn"
+          @click="redirect('RestaurantsComp')"
+        >
+          show
+        </button>
+        <button class="btn intro-restaurant-more"></button>
+      </p>
+    </section>
+  </div>
+</template>
+
+<script>
+import { mapActions } from "vuex";
+export default {
+  name: "introPage",
+  data: () => {
+    return {};
+  },
+  methods: {
+    ...mapActions(["redirect"]),
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.intro-restaurant {
+  background-image: url("@/assets/homeImages/golden-cutlery-with-textile-plate-dark-background-top-view.jpg");
+  width: 100%;
+  height: 600px;
+  background-origin: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.intro-restaurant-des,
+.intro-restaurant-btn,
+.intro-restaurant-more {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 25px;
+  color: #dc0000 !important;
+  text-transform: capitalize;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.intro-restaurant-des {
+  line-height: 2.2;
+  letter-spacing: 1px;
+  width: 60%;
+}
+.intro-restaurant-btn {
+  margin-top: 15%;
+  padding: 2%;
+  width: 30%;
+  border: 1px solid #ff7000;
+  transition: all ease-in-out 0.7s;
+}
+.intro-restaurant-btn:hover {
+  width: 35%;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 25px;
+}
+.intro-restaurant-more {
+  margin-top: 25%;
+}
+</style>
