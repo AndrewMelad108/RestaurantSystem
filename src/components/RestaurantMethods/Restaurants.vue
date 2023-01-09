@@ -97,9 +97,8 @@ export default {
     DeleteAllLocations() {
       this.$router.push({ path: `/DeleteAllLocations` });
     },
-    goMenuRestaurant(id) {
-      this.$router.push({ path: `/MenuComp` });
-      console.log(id);
+    goMenuRestaurant(restaurantId) {
+      this.$router.push({ path: `/MenuComp/${restaurantId}` });
     },
   },
   created() {},

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import router from "./router";
 import SignUpForm from "../views/SignUp.vue";
 import LogInPage from "../views/LogIn.vue";
 import profilePage from "../views/Profile/Profile.vue";
@@ -11,6 +10,9 @@ import updateRestaurant from "../components/RestaurantMethods/updateRestaurant.v
 import deleteRestaurant from "../components/RestaurantMethods/deleteRestaurant.vue";
 import DeleteAllLocations from "../components/RestaurantMethods/DeleteAllLocations.vue";
 import MenuComp from "../components/Menu/menuComp.vue";
+import ViewCategories from "../components/Menu/ViewCategories.vue";
+import AddCategories from "../components/Menu/addCategories.vue";
+import addItems from "../components/Menu/addItems.vue";
 import errorPage from "../views/Error.vue";
 const routes = [
   {
@@ -44,7 +46,7 @@ const routes = [
     component: RestaurantsComp,
   },
   {
-    path: "/addRestaurantLocation",
+    path: "/add-Restaurant-Location",
     name: "addRestaurantLocation",
     component: addRestaurantLocation,
   },
@@ -62,7 +64,7 @@ const routes = [
     },
   },
   {
-    path: "/deleteRestaurant/:deleteRestaurant",
+    path: "/delete-Restaurant/:deleteRestaurant",
     name: "deleteRestaurant",
     component: deleteRestaurant,
   },
@@ -80,9 +82,33 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp",
+    path: "/MenuComp/:restaurantId",
     name: "MenuComp",
     component: MenuComp,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/MenuComp/view/:locationId",
+    name: "ViewCategories",
+    component: ViewCategories,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/MenuComp/AddCategories/:locationId",
+    name: "AddCategories",
+    component: AddCategories,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/MenuComp/add/-item/:locationId",
+    name: "addItems",
+    component: addItems,
     meta: {
       requireAuth: true,
     },
