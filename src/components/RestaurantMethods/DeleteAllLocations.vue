@@ -62,13 +62,13 @@ export default {
     async DeleteAllLocations() {
       let allResult = [];
       for (let i = 0; i < this.allLocation.length; i++) {
-        let result = await axios
-          .delete(`http://localhost:3000/locations/${this.allLocation[i]}`)
-          .then(() => {
-            this.redirect("Home ");
-          });
+        let result = await axios.delete(
+          `http://localhost:3000/locations/${this.allLocation[i]}`
+        );
+
         if (result.status == 201) {
           allResult.push(true);
+          this.redirect("Home");
         } else {
           allResult.push(false);
         }

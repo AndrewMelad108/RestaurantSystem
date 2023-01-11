@@ -92,10 +92,15 @@ export default {
       this.$router.push({ path: `/updateRestaurant/${id}` });
     },
     goDeleteRestaurant(deleteRestaurant) {
-      this.$router.push({ path: `/deleteRestaurant/${deleteRestaurant}` });
+      this.$router.push({
+        name: "deleteRestaurant",
+        params: {
+          deleteRestaurant: deleteRestaurant,
+        },
+      });
     },
     DeleteAllLocations() {
-      this.$router.push({ path: `/DeleteAllLocations` });
+      this.$router.push({ name: "DeleteAllLocations" });
     },
     goMenuRestaurant(restaurantId) {
       this.$router.push({ path: `/MenuComp/${restaurantId}` });
