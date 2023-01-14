@@ -16,6 +16,7 @@ import UpdateCategories from "../components/Menu/Categories/updateCategories.vue
 import DeleteCategories from "../components/Menu/Categories/deleteCategories.vue";
 import DeleteAllCategories from "../components/Menu/Categories/DeleteAllCategories.vue";
 import addItems from "../components/Menu/Items/addItems.vue";
+import updateItem from "../components/Menu/Items/UpdateItems.vue";
 import errorPage from "../views/Error.vue";
 const routes = [
   {
@@ -133,9 +134,17 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/add/-item/:locationId",
+    path: "/MenuComp/add/item/:locationId",
     name: "addItems",
     component: addItems,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/MenuComp/update/loc/:locationId/item/:itemId",
+    name: "updateItem",
+    component: updateItem,
     meta: {
       requireAuth: true,
     },

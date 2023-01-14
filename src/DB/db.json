@@ -14,66 +14,69 @@
       "addressRestaurant": "qwwqwwed",
       "userId": 16,
       "id": 1
+    },
+    {
+      "nameRestaurant": "jhvmnvmnjljl",
+      "phoneRestaurant": 5645446565545,
+      "addressRestaurant": "lglkjgkjgjgkjgkjgkj",
+      "userId": 16,
+      "id": 2
     }
   ],
   "categories": [
     {
-      "name": "fit food",
+      "name": "fgfdfgfh",
       "userId": 16,
       "locationId": 1,
       "id": 1
     },
     {
-      "name": "dczxc",
+      "name": "fast food ",
+      "userId": 16,
+      "locationId": 1,
+      "id": 2
+    }
+  ],
+  "items": [
+    {
+      "name": "cxcxc",
+      "Quantities": 111,
+      "Price": "52.00",
+      "Description": "cxvcxvxcvxcvcxvxcv",
+      "catId": 2,
+      "userId": 16,
+      "locationId": 1,
+      "id": 1
+    },
+    {
+      "name": "cSwdasd",
+      "Quantities": 888,
+      "Price": "223232.00",
+      "Description": "fsdfsdfsdfsfdsfsdfsdf",
+      "catId": 1,
       "userId": 16,
       "locationId": 1,
       "id": 2
     },
     {
-      "name": "dffsdfsd",
+      "name": "vvv v",
+      "Quantities": 5555,
+      "Price": "555.00",
+      "Description": "5445jhvjnvnvbnvbnb",
+      "catId": 2,
       "userId": 16,
       "locationId": 1,
       "id": 3
     },
     {
-      "name": "dsfdsfsdf",
+      "name": "cvcvcv",
+      "Quantities": 5494,
+      "Price": "989898.00",
+      "Description": "zcczczzczczczc",
+      "catId": 2,
       "userId": 16,
       "locationId": 1,
       "id": 4
-    },
-    {
-      "name": "dsfdsfdsf",
-      "userId": 16,
-      "locationId": 1,
-      "id": 5
-    },
-    {
-      "name": "dsfsdfsdf",
-      "userId": 16,
-      "locationId": 1,
-      "id": 6
-    }
-  ],
-  "items": [
-    {
-      "name": "vcvcv",
-      "Quantities": 222,
-      "Price": "25.00",
-      "Description": "vcvcvxcvxccvcv",
-      "catId": 3,
-      "userId": 16,
-      "locationId": 1,
-      "id": 1
-    },
-    {
-      "name": "sadfsds",
-      "Quantities": 42353,
-      "Price": "52323.00",
-      "Description": "52323232345475456354",
-      "catId": 1,
-      "userId": 16,
-      "locationId": 1,
-      "id": 2
     }
   ]
 }

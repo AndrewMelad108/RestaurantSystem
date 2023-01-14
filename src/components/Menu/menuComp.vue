@@ -21,13 +21,43 @@
             <h1 class="restaurant-title">{{ localName }}</h1>
             <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
           </div>
+          <div class="displayMenu">
+            <div
+              class="displayCategories"
+              v-for="(category, i) in listOfAllCategories"
+              :key="i"
+            >
+              <div class="categoryName">
+                <span>name category :_</span>
+                {{ category.name }}
+                <div
+                  class="displayItems"
+                  v-for="(item, i) in listOfAllItems"
+                  :key="i"
+                >
+                  <div class="name items" v-if="category.id == item.catId">
+                    <span>name item :_</span>
+                    {{ item.name }}
+                    <router-link
+                      :to="{
+                        name: 'updateItem',
+                        params: {
+                          itemId: item.id,
+                          locationId: restaurantId,
+                        },
+                      }"
+                      class="btn-update btn btn-info"
+                    >
+                      update</router-link
+                    >
+                  </div>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
         </div>
       </div>
-      <!-- <div>{{ isUserLoggedIn }}</div>
-      <div>{{ isUserLoggedInId }}</div>
-      <div>{{ numOfCategories }}</div>
-      <div>{{ listOfCategories }}</div>
-      <div>{{ restaurantId }}</div> -->
     </div>
   </div>
 </template>
@@ -40,7 +70,6 @@ export default {
   name: "MenuComp",
   data() {
     return {
-      userId: "",
       restaurantId: this.$route.params.restaurantId,
       localName: "",
       addressName: "",
@@ -52,22 +81,23 @@ export default {
   computed: {
     ...mapState([
       "isUserLoggedIn",
-      "listOfCategories",
+      "listOfAllCategories",
       "numOfCategories",
       "isUserLoggedInId",
+      "listOfAllItems",
     ]),
   },
-  created() {},
   mounted() {
     this.isUserLogged();
     this.displayCategories({
       id: this.isUserLoggedInId,
       location: this.restaurantId,
     });
-
-    console.log(this.isUserLoggedInId);
-    console.log(this.restaurantId);
     this.displayLocations();
+    this.getUserItems({
+      userId: this.isUserLoggedInId,
+      locationId: this.restaurantId,
+    });
   },
   methods: {
     ...mapActions(["redirect"]),
@@ -75,6 +105,7 @@ export default {
       "isUserLogged",
       "displayCategories",
       "accessUserLocations",
+      "getUserItems",
     ]),
     goToAddItems() {
       this.$router.push({
@@ -97,8 +128,6 @@ export default {
         `http://localhost:3000/locations?userId=${this.isUserLoggedInId}&id=${this.restaurantId}`
       );
       if (result.status == 200) {
-        console.log("run");
-        console.log(result.data);
         this.localName = result.data[0].nameRestaurant;
         this.addressName = result.data[0].addressRestaurant;
       } else {

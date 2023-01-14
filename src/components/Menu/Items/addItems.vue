@@ -85,7 +85,7 @@
                 v-model="PickedCategory"
               >
                 <option
-                  v-for="category in listOfCategories"
+                  v-for="category in listOfAllCategories"
                   :key="category.index"
                   :value="category.id"
                 >
@@ -178,7 +178,7 @@ export default {
   computed: {
     ...mapState([
       "isUserLoggedIn",
-      "listOfCategories",
+      "listOfAllCategories",
       "numOfCategories",
       "isUserLoggedInId",
     ]),

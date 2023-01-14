@@ -20,7 +20,7 @@
           <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
         </div>
         <div class="UpdateItems-form m-auto w-auto">
-          <form @click.prevent>
+          <form @click.prevent v-for="item in listOfItems" :key="item.index">
             <div class="form-floating">
               <!--name itmes-->
 
@@ -29,7 +29,7 @@
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Enter Name Items"
-                v-model.trim="name"
+                v-model.trim="item.name"
               />
               <label for="floatingPassword">Enter Name Items</label>
             </div>
@@ -48,7 +48,7 @@
                 class="form-control"
                 id="Quantities"
                 placeholder="Enter Name Quantities"
-                v-model.trim="Quantities"
+                v-model.trim="item.Quantities"
               />
               <label for="Quantities">Enter Name Quantities</label>
             </div>
@@ -66,7 +66,7 @@
                 class="form-control"
                 id="Price"
                 placeholder="Enter Price Items"
-                v-model.trim="Price"
+                v-model.trim="item.Price"
               />
               <label for="Quantities">Enter Price Items</label>
             </div>
@@ -82,7 +82,7 @@
                 class="form-select"
                 id="floatingSelect"
                 aria-label="Floating label select example"
-                v-model="PickedCategory"
+                v-model="item.PickedCategory"
               >
                 <option
                   v-for="category in listOfCategories"
@@ -101,7 +101,7 @@
                 class="form-control"
                 placeholder="Enter Description About Items"
                 id="floatingTextarea"
-                v-model.trim="Description"
+                v-model.trim="item.Description"
               ></textarea>
               <label for="floatingTextarea"
                 >Enter Description About Items</label
@@ -116,9 +116,9 @@
             </span>
             <button
               class="btn btn-info text-center d-block m-auto"
-              @click="addItems()"
+              @click="updateItems()"
             >
-              add items
+              updateItems
             </button>
           </form>
         </div>
@@ -139,6 +139,7 @@ export default {
   data() {
     return {
       restaurantId: this.$route.params.locationId,
+      itemId: this.$route.params.itemId,
       addressName: "",
       localName: "",
       name: "",
@@ -147,7 +148,7 @@ export default {
       PickedCategory: "",
       Price: "",
       v$: useValidate(),
-      listUserCategories: [],
+      listUserItems: [],
     };
   },
   validations() {
@@ -181,6 +182,7 @@ export default {
       "listOfCategories",
       "numOfCategories",
       "isUserLoggedInId",
+      "listOfItems",
     ]),
   },
   components: {
@@ -195,7 +197,13 @@ export default {
       redirect: "Home",
     });
     this.displayLocations();
-    this.displayUserCategories();
+    this.accessUserThisItems({
+      userId: this.isUserLoggedInId,
+      locationId: this.restaurantId,
+      id: this.itemId,
+      // redirect: "Home",
+    });
+    console.table(this.listOfItems);
   },
   methods: {
     ...mapActions(["redirect"]),
@@ -203,6 +211,7 @@ export default {
       "isUserLogged",
       "displayCategories",
       "accessUserLocations",
+      "accessUserThisItems",
     ]),
     BackCategories() {
       this.$router.push({
@@ -231,48 +240,51 @@ export default {
         console.log("not run");
       }
     },
-    async displayUserCategories() {
+    async displayUserItems() {
       let result = await axios.get(
-        `http://localhost:3000/categories?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}`
+        `http://localhost:3000/items?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}`
       );
       if (result.status == 200) {
-        this.listUserCategories = result.data;
-        console.table(this.listUserCategories);
+        this.listUserItems = result.data;
+        console.table(this.listUserItems);
       } else {
         console.log("not displayUserCategories");
       }
     },
-    async addItems() {
-      // console.log(this.listUserCategories);
-      // let resultFliterName = this.listUserCategories.filter((v) => {
-      //   return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
-      // });
-      // console.log(resultFliterName);
+    async updateItems() {
+      console.log(this.listUserItems);
+      let resultFliterName = this.listUserItems.filter((v) => {
+        return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
+      });
+      console.log(resultFliterName);
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
-        // if (resultFliterName.length > 0) {
-        //   alert("name exist");
-        //   this.name = "";
-        // } else {
-        //   console.log("  valid ");
-        let result = await axios.post(`http://localhost:3000/items`, {
-          name: this.name,
-          Quantities: +this.Quantities,
-          Price: parseFloat(this.Price).toFixed(2),
-          Description: this.Description,
-          catId: this.PickedCategory,
-          userId: +this.isUserLoggedInId,
-          locationId: +this.restaurantId,
-        });
-        if (result.status == 201) {
-          this.$router.push({
-            name: "MenuComp",
-            params: {
-              restaurantId: this.restaurantId,
-            },
-          });
+        if (resultFliterName.length > 0) {
+          alert("name exist");
+          this.name = "";
+        } else {
+          console.log("  valid ");
+          let result = await axios.put(
+            `http://localhost:3000/items/${this.itemId}`,
+            {
+              name: this.name,
+              Quantities: +this.Quantities,
+              Price: parseFloat(this.Price).toFixed(2),
+              Description: this.Description,
+              catId: this.PickedCategory,
+              userId: +this.isUserLoggedInId,
+              locationId: +this.restaurantId,
+            }
+          );
+          if (result.status == 200) {
+            this.$router.push({
+              name: "MenuComp",
+              params: {
+                restaurantId: this.restaurantId,
+              },
+            });
+          }
         }
-        // }
       } else {
         console.log(" not valid ");
       }
@@ -286,7 +298,7 @@ export default {
   padding-top: 6%;
 }
 .UpdateItems-back-categories,
-.AddItems-back-menu {
+.UpdateItems-back-menu {
   width: auto;
 }
 .UpdateItems-back-menu {

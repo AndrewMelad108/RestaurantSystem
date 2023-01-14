@@ -30,7 +30,7 @@
             <div class="row">
               <div
                 class="card col-4"
-                v-for="item in listOfCategories"
+                v-for="item in listOfAllCategories"
                 :key="item.index"
               >
                 <div class="card-body">
@@ -79,7 +79,7 @@ export default {
   computed: {
     ...mapState([
       "isUserLoggedIn",
-      "listOfCategories",
+      "listOfAllCategories",
       "numOfCategories",
       "isUserLoggedInId",
     ]),
