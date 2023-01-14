@@ -7,7 +7,73 @@
       "id": 16
     }
   ],
-  "locations": [],
-  "categories": [],
-  "items": []
+  "locations": [
+    {
+      "nameRestaurant": "fit foood rest",
+      "phoneRestaurant": 12345665461,
+      "addressRestaurant": "qwwqwwed",
+      "userId": 16,
+      "id": 1
+    }
+  ],
+  "categories": [
+    {
+      "name": "fit food",
+      "userId": 16,
+      "locationId": 1,
+      "id": 1
+    },
+    {
+      "name": "dczxc",
+      "userId": 16,
+      "locationId": 1,
+      "id": 2
+    },
+    {
+      "name": "dffsdfsd",
+      "userId": 16,
+      "locationId": 1,
+      "id": 3
+    },
+    {
+      "name": "dsfdsfsdf",
+      "userId": 16,
+      "locationId": 1,
+      "id": 4
+    },
+    {
+      "name": "dsfdsfdsf",
+      "userId": 16,
+      "locationId": 1,
+      "id": 5
+    },
+    {
+      "name": "dsfsdfsdf",
+      "userId": 16,
+      "locationId": 1,
+      "id": 6
+    }
+  ],
+  "items": [
+    {
+      "name": "vcvcv",
+      "Quantities": 222,
+      "Price": "25.00",
+      "Description": "vcvcvxcvxccvcv",
+      "catId": 3,
+      "userId": 16,
+      "locationId": 1,
+      "id": 1
+    },
+    {
+      "name": "sadfsds",
+      "Quantities": 42353,
+      "Price": "52323.00",
+      "Description": "52323232345475456354",
+      "catId": 1,
+      "userId": 16,
+      "locationId": 1,
+      "id": 2
+    }
+  ]
 }

@@ -10,12 +10,12 @@ import updateRestaurant from "../components/RestaurantMethods/updateRestaurant.v
 import deleteRestaurant from "../components/RestaurantMethods/deleteRestaurant.vue";
 import DeleteAllLocations from "../components/RestaurantMethods/DeleteAllLocations.vue";
 import MenuComp from "../components/Menu/menuComp.vue";
-import ViewCategories from "../components/Menu/ViewCategories.vue";
-import AddCategories from "../components/Menu/addCategories.vue";
-import UpdateCategories from "../components/Menu/updateCategories.vue";
-import DeleteCategories from "../components/Menu/deleteCategories.vue";
-import DeleteAllCategories from "../components/Menu/DeleteAllCategories.vue";
-import addItems from "../components/Menu/addItems.vue";
+import ViewCategories from "../components/Menu/Categories/ViewCategories.vue";
+import AddCategories from "../components/Menu/Categories/addCategories.vue";
+import UpdateCategories from "../components/Menu/Categories/updateCategories.vue";
+import DeleteCategories from "../components/Menu/Categories/deleteCategories.vue";
+import DeleteAllCategories from "../components/Menu/Categories/DeleteAllCategories.vue";
+import addItems from "../components/Menu/Items/addItems.vue";
 import errorPage from "../views/Error.vue";
 const routes = [
   {
