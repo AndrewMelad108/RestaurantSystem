@@ -49,13 +49,30 @@ export default {
       addressRestaurant: "",
       phoneRestaurant: "",
       nameRestaurant: "",
+      listAllCategories: [],
+      listAllItems: [],
     };
   },
   components: {
     navigationComponent,
   },
+  async mounted() {
+    let allCategories = await axios.get(
+      `http://localhost:3000/categories/?userId=${this.userId}&locationId=${this.restaurantId}`
+    );
+    for (let i = 0; i < allCategories.data.length; i++) {
+      this.listAllCategories.push(allCategories.data[i].id);
+    }
+    console.table(this.listAllCategories);
+    let allIems = await axios.get(
+      `http://localhost:3000/items/?userId=${this.userId}&locationId=${this.restaurantId}`
+    );
+    for (let i = 0; i < allIems.data.length; i++) {
+      this.listAllItems.push(allIems.data[i].id);
+    }
+    console.table(this.listAllItems);
+  },
   created() {
-    console.log(this.restaurantId);
     let user = localStorage.getItem("user-info");
     if (!user) {
       this.redirect("signUp");
@@ -66,7 +83,33 @@ export default {
   },
   methods: {
     ...mapActions(["redirect"]),
-    getDeleteRestaurant() {
+    async getDeleteRestaurant() {
+      let allResultCategories = [];
+      for (let i = 0; i < this.listAllCategories.length; i++) {
+        let result = await axios.delete(
+          `http://localhost:3000/categories/${this.listAllCategories[i]}`
+        );
+
+        if (result.status == 201) {
+          allResultCategories.push(true);
+          this.redirect("Home");
+        } else {
+          allResultCategories.push(false);
+        }
+      }
+      let allResultItems = [];
+      for (let v = 0; v < this.listAllCategories.length; v++) {
+        let result = await axios.delete(
+          `http://localhost:3000/items/${this.listAllItems[v]}`
+        );
+
+        if (result.status == 201) {
+          allResultItems.push(true);
+          this.redirect("Home");
+        } else {
+          allResultItems.push(false);
+        }
+      }
       axios
         .get(
           `http://localhost:3000/locations/${this.restaurantId}/?userId=${this.userId}`

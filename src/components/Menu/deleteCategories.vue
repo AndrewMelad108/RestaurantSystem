@@ -25,6 +25,7 @@
             <div class="row">
               <button
                 class="btn btn-danger delete col-6 w-auto d-block ml-auto"
+                @click="DeleteCategories()"
               >
                 delete category
               </button>
@@ -53,6 +54,7 @@ export default {
       name: "",
       catId: this.$route.params.catId,
       listUserCategories: [],
+      listAllItems: [],
       nameCategory: "",
     };
   },
@@ -77,7 +79,7 @@ export default {
     // });
     this.getLocationName();
     this.getCategoryName();
-    // this.displayUserCategories();
+    this.getDeleteAllItems();
   },
   methods: {
     ...mapActions(["redirect"]),
@@ -90,7 +92,7 @@ export default {
       this.$router.push({
         name: "ViewCategories",
         params: {
-          locationId: this.restaurantId,
+          locationId: this.locationId,
         },
       });
     },
@@ -107,7 +109,6 @@ export default {
         `http://localhost:3000/locations?userId=${this.isUserLoggedInId}&id=${this.locationId}`
       );
       if (result.status == 200) {
-        console.log(result.data);
         this.localName = result.data[0].nameRestaurant;
         this.addressName = result.data[0].addressRestaurant;
       } else {
@@ -125,29 +126,30 @@ export default {
       }
     },
     async DeleteCategories() {
-      console.log(this.listUserCategories);
-      let resultFliterName = this.listUserCategories.filter((v) => {
-        return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
-      });
-      console.log(resultFliterName);
-      this.v$.$validate(); //run function validations
-      if (!this.v$.$error) {
-        if (resultFliterName.length > 0) {
-          alert("name exist");
-          this.name = "";
-        } else {
-          console.log("  valid ");
-          let result = await axios.post(`http://localhost:3000/categories`, {
-            name: this.name,
-            userId: +this.isUserLoggedInId,
-            locationId: +this.restaurantId,
-          });
-          if (result.status == 201) {
-            this.BackCategories();
-          }
-        }
+      let result = await axios.delete(
+        `http://localhost:3000/categories/${this.catId}`
+      );
+      for (let i = 0; i < this.listAllItems.length; i++) {
+        await axios.delete(
+          `http://localhost:3000/items/${this.listAllItems[i]}`
+        );
+      }
+      if (result.status == 200) {
+        this.BackCategories();
       } else {
-        console.log(" not valid ");
+        alert("error");
+      }
+    },
+    async getDeleteAllItems() {
+      let items = await axios.get(
+        `http://localhost:3000/items?catId=${this.catId}&userId=${this.isUserLoggedInId}`
+      );
+
+      if (items.status == 200) {
+        for (let i = 0; i < items.data.length; i++) {
+          this.listAllItems.push(items.data[i].id);
+        }
+        console.table(this.listAllItems);
       }
     },
   },

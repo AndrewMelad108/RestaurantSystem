@@ -1,114 +1,13 @@
 {
   "users": [
     {
-      "Name": "andrew melad",
-      "Password": "12345679525",
-      "Email": "asd@asd.com",
-      "id": 13
-    },
-    {
-      "Name": "andrew Melad",
-      "Password": "asddddddddddddd",
-      "Email": "asd@asd.com",
-      "id": 14
-    },
-    {
-      "Name": "aaaaaaaaaaaaaaaaa",
-      "Password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "Email": "aaaaaaaaaaaaaaaaaaaaaaaaaa@asd.com",
-      "id": 15
-    },
-    {
       "Name": "andrew melad 7",
       "Password": "123456789",
       "Email": "asd@asd.com",
       "id": 16
     }
   ],
-  "locations": [
-    {
-      "nameRestaurant": "FIT POX SHOP",
-      "phoneRestaurant": 123456789755,
-      "addressRestaurant": "ASUST CARIOA ",
-      "userId": 14,
-      "id": 12
-    },
-    {
-      "nameRestaurant": "aaaaaaaaaaaaaaaaaa",
-      "phoneRestaurant": 5.555555555555555e+26,
-      "addressRestaurant": "5522222222222222222222222222222222222222",
-      "userId": 14,
-      "id": 13
-    },
-    {
-      "nameRestaurant": "AMDDFDSFD22222",
-      "phoneRestaurant": 2.2222222222222222e+24,
-      "addressRestaurant": "22222222222222222222222222222",
-      "userId": 14,
-      "id": 14
-    },
-    {
-      "nameRestaurant": "KFC FOOOD FI",
-      "phoneRestaurant": 1.1111111111111112e+41,
-      "addressRestaurant": "asust caruios egypt",
-      "userId": 15,
-      "id": 15
-    },
-    {
-      "nameRestaurant": "aaaaaaaaaa",
-      "phoneRestaurant": 222222222222222200,
-      "addressRestaurant": "888888888888888888888",
-      "userId": 16,
-      "id": 16
-    }
-  ],
-  "categories": [
-    {
-      "name": "Xzxzx",
-      "userId": 15,
-      "locationId": 15,
-      "id": 6
-    },
-    {
-      "name": "vbvbvb",
-      "userId": 15,
-      "locationId": 15,
-      "id": 7
-    },
-    {
-      "name": "andrew1",
-      "userId": 15,
-      "locationId": "15",
-      "id": 8
-    },
-    {
-      "name": "ddddasd",
-      "userId": 15,
-      "locationId": 15,
-      "id": 9
-    },
-    {
-      "name": "asdfffffff",
-      "id": 10
-    },
-    {
-      "name": "dddddddd",
-      "userId": 15,
-      "locationId": 15,
-      "id": 11
-    },
-    {
-      "name": "asd",
-      "userId": 16,
-      "locationId": 16,
-      "id": 12
-    },
-    {
-      "name": "asd123",
-      "userId": 16,
-      "locationId": 16,
-      "id": 13
-    }
-  ],
+  "locations": [],
+  "categories": [],
   "items": []
 }

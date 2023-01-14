@@ -5,13 +5,19 @@
       <div class="container">
         <div class="row">
           <button
-            class="btn btn-info ViewCategories-add-categories col-6"
+            class="btn btn-info ViewCategories-add-categories col-4"
             @click="goToAddCategories()"
           >
             Add categories
           </button>
           <button
-            class="btn btn-info ViewCategories-Back-btn col-6"
+            class="btn btn-danger ViewCategories-add-categories col-4 m-auto"
+            @click="goToDeleteAllCategories()"
+          >
+            DeleteAllCategories
+          </button>
+          <button
+            class="btn btn-info ViewCategories-Back-btn col-4"
             @click="Back()"
           >
             Back to menu
@@ -147,6 +153,14 @@ export default {
         name: "DeleteCategories",
         params: {
           catId: catId,
+          locationId: this.restaurantId,
+        },
+      });
+    },
+    goToDeleteAllCategories() {
+      this.$router.push({
+        name: "DeleteAllCategories",
+        params: {
           locationId: this.restaurantId,
         },
       });

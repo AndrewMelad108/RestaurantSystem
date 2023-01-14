@@ -37,6 +37,8 @@ export default {
     return {
       userId: "",
       allLocation: [],
+      allItems: [],
+      allCategories: [],
     };
   },
   components: {
@@ -48,29 +50,69 @@ export default {
       this.redirect("signUp");
     } else {
       this.userId = JSON.parse(user).id;
-      let result = await axios.get(
+      let resultLocation = await axios.get(
         `http://localhost:3000/locations/?userId=${this.userId}`
       );
-      for (let i = 0; i < result.data.length; i++) {
-        this.allLocation.push(result.data[i].id);
+      for (let i = 0; i < resultLocation.data.length; i++) {
+        this.allLocation.push(resultLocation.data[i].id);
       }
       console.table(this.allLocation);
+      let resultCategoriesId = await axios.get(
+        `http://localhost:3000/categories/?userId=${this.userId}`
+      );
+      for (let i = 0; i < resultCategoriesId.data.length; i++) {
+        this.allCategories.push(resultCategoriesId.data[i].id);
+      }
+      console.table(this.allCategories);
+      let resultItemsId = await axios.get(
+        `http://localhost:3000/items/?userId=${this.userId}`
+      );
+      for (let i = 0; i < resultItemsId.data.length; i++) {
+        this.allItems.push(resultItemsId.data[i].id);
+      }
+      console.table(this.allItems);
     }
   },
   methods: {
     ...mapActions(["redirect"]),
     async DeleteAllLocations() {
       let allResult = [];
-      for (let i = 0; i < this.allLocation.length; i++) {
+      for (let j = 0; j < this.allLocation.length; j++) {
         let result = await axios.delete(
-          `http://localhost:3000/locations/${this.allLocation[i]}`
+          `http://localhost:3000/locations/${this.allLocation[j]}`
         );
 
-        if (result.status == 201) {
+        if (result.status == 200) {
           allResult.push(true);
           this.redirect("Home");
         } else {
           allResult.push(false);
+        }
+      }
+      let allResultCategories = [];
+      for (let i = 1; i <= this.allLocation.length; i++) {
+        let result = await axios.delete(
+          `http://localhost:3000/categories/?&id=${this.allCategories[i]}&userId=${this.userId}`
+        );
+
+        if (result.status == 200) {
+          allResultCategories.push(true);
+          this.redirect("Home");
+        } else {
+          allResultCategories.push(false);
+        }
+      }
+      let allResultItems = [];
+      for (let v = 1; v <= this.allLocation.length; v++) {
+        let result = await axios.delete(
+          `http://localhost:3000/items/?&id=${this.allItems[v]}&userId=${this.userId}`
+        );
+
+        if (result.status == 200) {
+          allResultItems.push(true);
+          this.redirect("Home");
+        } else {
+          allResultItems.push(false);
         }
       }
     },
