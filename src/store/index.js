@@ -8,7 +8,7 @@ const state = {
   listOfCategories: [],
   listOfAllCategories: [],
   listOfLocations: [],
-  listOfItems: [],
+  listOfItems: {},
   listOfAllItems: [],
 };
 const getters = {};

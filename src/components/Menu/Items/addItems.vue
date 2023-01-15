@@ -243,36 +243,36 @@ export default {
       }
     },
     async addItems() {
-      // console.log(this.listUserCategories);
-      // let resultFliterName = this.listUserCategories.filter((v) => {
-      //   return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
-      // });
-      // console.log(resultFliterName);
+      console.log(this.listUserCategories);
+      let resultFliterName = this.listUserCategories.filter((v) => {
+        return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
+      });
+      console.log(resultFliterName);
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
-        // if (resultFliterName.length > 0) {
-        //   alert("name exist");
-        //   this.name = "";
-        // } else {
-        //   console.log("  valid ");
-        let result = await axios.post(`http://localhost:3000/items`, {
-          name: this.name,
-          Quantities: +this.Quantities,
-          Price: parseFloat(this.Price).toFixed(2),
-          Description: this.Description,
-          catId: this.PickedCategory,
-          userId: +this.isUserLoggedInId,
-          locationId: +this.restaurantId,
-        });
-        if (result.status == 201) {
-          this.$router.push({
-            name: "MenuComp",
-            params: {
-              restaurantId: this.restaurantId,
-            },
+        if (resultFliterName.length > 0) {
+          alert("name exist");
+          this.name = "";
+        } else {
+          console.log("  valid ");
+          let result = await axios.post(`http://localhost:3000/items`, {
+            name: this.name,
+            Quantities: +this.Quantities,
+            Price: parseFloat(this.Price).toFixed(2),
+            Description: this.Description,
+            catId: this.PickedCategory,
+            userId: +this.isUserLoggedInId,
+            locationId: +this.restaurantId,
           });
+          if (result.status == 201) {
+            this.$router.push({
+              name: "MenuComp",
+              params: {
+                restaurantId: this.restaurantId,
+              },
+            });
+          }
         }
-        // }
       } else {
         console.log(" not valid ");
       }

@@ -20,7 +20,7 @@
           <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
         </div>
         <div class="UpdateItems-form m-auto w-auto">
-          <form @click.prevent v-for="item in listOfItems" :key="item.index">
+          <form @click.prevent>
             <div class="form-floating">
               <!--name itmes-->
 
@@ -29,7 +29,7 @@
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Enter Name Items"
-                v-model.trim="item.name"
+                v-model.trim="name"
               />
               <label for="floatingPassword">Enter Name Items</label>
             </div>
@@ -48,7 +48,7 @@
                 class="form-control"
                 id="Quantities"
                 placeholder="Enter Name Quantities"
-                v-model.trim="item.Quantities"
+                v-model.trim="Quantities"
               />
               <label for="Quantities">Enter Name Quantities</label>
             </div>
@@ -66,7 +66,7 @@
                 class="form-control"
                 id="Price"
                 placeholder="Enter Price Items"
-                v-model.trim="item.Price"
+                v-model.trim="Price"
               />
               <label for="Quantities">Enter Price Items</label>
             </div>
@@ -82,10 +82,10 @@
                 class="form-select"
                 id="floatingSelect"
                 aria-label="Floating label select example"
-                v-model="item.PickedCategory"
+                v-model="PickedCategory"
               >
                 <option
-                  v-for="category in listOfCategories"
+                  v-for="category in listUserCategories"
                   :key="category.index"
                   :value="category.id"
                 >
@@ -101,7 +101,7 @@
                 class="form-control"
                 placeholder="Enter Description About Items"
                 id="floatingTextarea"
-                v-model.trim="item.Description"
+                v-model.trim="Description"
               ></textarea>
               <label for="floatingTextarea"
                 >Enter Description About Items</label
@@ -142,13 +142,13 @@ export default {
       itemId: this.$route.params.itemId,
       addressName: "",
       localName: "",
-      name: "",
-      Description: "",
-      Quantities: "",
-      PickedCategory: "",
-      Price: "",
       v$: useValidate(),
-      listUserItems: [],
+      name: "",
+      Quantities: "",
+      Price: "",
+      Description: "",
+      PickedCategory: "",
+      listUserCategories: [],
     };
   },
   validations() {
@@ -182,7 +182,6 @@ export default {
       "listOfCategories",
       "numOfCategories",
       "isUserLoggedInId",
-      "listOfItems",
     ]),
   },
   components: {
@@ -196,14 +195,10 @@ export default {
       locationId: this.restaurantId,
       redirect: "Home",
     });
+    console.log(this.PickedCategory);
     this.displayLocations();
-    this.accessUserThisItems({
-      userId: this.isUserLoggedInId,
-      locationId: this.restaurantId,
-      id: this.itemId,
-      // redirect: "Home",
-    });
-    console.table(this.listOfItems);
+    this.displayUserItems();
+    this.displayUserCategories();
   },
   methods: {
     ...mapActions(["redirect"]),
@@ -240,51 +235,65 @@ export default {
         console.log("not run");
       }
     },
-    async displayUserItems() {
+    async displayUserCategories() {
       let result = await axios.get(
-        `http://localhost:3000/items?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}`
+        `http://localhost:3000/categories?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}`
       );
       if (result.status == 200) {
-        this.listUserItems = result.data;
-        console.table(this.listUserItems);
+        this.listUserCategories = result.data;
+      } else {
+        console.log("not displayUserCategories");
+      }
+    },
+    async displayUserItems() {
+      let result = await axios.get(
+        `http://localhost:3000/items?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}&id=${this.itemId}`
+      );
+      if (result.status == 200) {
+        this.name = result.data[0].name;
+        this.Quantities = result.data[0].Quantities;
+        this.Price = result.data[0].Price;
+        this.Description = result.data[0].Description;
+        this.PickedCategory = result.data[0].catId;
       } else {
         console.log("not displayUserCategories");
       }
     },
     async updateItems() {
       console.log(this.listUserItems);
-      let resultFliterName = this.listUserItems.filter((v) => {
-        return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
-      });
-      console.log(resultFliterName);
+      // let resultFliterName = this.listUserItems.filter((v) => {
+      //   return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
+      // });
+      // console.log(resultFliterName);
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
-        if (resultFliterName.length > 0) {
-          alert("name exist");
-          this.name = "";
-        } else {
-          console.log("  valid ");
-          let result = await axios.put(
-            `http://localhost:3000/items/${this.itemId}`,
-            {
-              name: this.name,
-              Quantities: +this.Quantities,
-              Price: parseFloat(this.Price).toFixed(2),
-              Description: this.Description,
-              catId: this.PickedCategory,
-              userId: +this.isUserLoggedInId,
-              locationId: +this.restaurantId,
-            }
-          );
-          if (result.status == 200) {
-            this.$router.push({
-              name: "MenuComp",
-              params: {
-                restaurantId: this.restaurantId,
-              },
-            });
+        // if (resultFliterName.length > 0) {
+        //   alert("name exist");
+        //   this.name = "";
+        // } else {
+        console.log("  valid ");
+        let result = await axios.put(
+          `http://localhost:3000/items/${this.itemId}`,
+          {
+            name: this.name,
+            Quantities: this.Quantities,
+            Price: this.Price,
+            Description: this.Description,
+            catId: this.PickedCategory,
+            userId: this.isUserLoggedInId,
+            locationId: this.restaurantId,
+            id: this.itemId,
           }
+        );
+        if (result.status == 200) {
+          this.$router.push({
+            name: "MenuComp",
+            params: {
+              restaurantId: this.restaurantId,
+            },
+          });
         }
+        // }
       } else {
         console.log(" not valid ");
       }

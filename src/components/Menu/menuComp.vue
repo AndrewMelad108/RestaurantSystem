@@ -27,33 +27,65 @@
               v-for="(category, i) in listOfAllCategories"
               :key="i"
             >
-              <div class="categoryName">
-                <span>name category :_</span>
-                {{ category.name }}
-                <div
-                  class="displayItems"
-                  v-for="(item, i) in listOfAllItems"
-                  :key="i"
-                >
-                  <div class="name items" v-if="category.id == item.catId">
-                    <span>name item :_</span>
-                    {{ item.name }}
-                    <router-link
-                      :to="{
-                        name: 'updateItem',
-                        params: {
-                          itemId: item.id,
-                          locationId: restaurantId,
-                        },
-                      }"
-                      class="btn-update btn btn-info"
-                    >
-                      update</router-link
-                    >
+              <h1 class="title-category text-center">{{ category.name }}</h1>
+              <div class="container">
+                <div class="row">
+                  <div
+                    class="displayItems"
+                    v-for="(item, i) in listOfAllItems"
+                    v-show="category.id == item.catId"
+                    :key="i"
+                    :class="{
+                      'col-xs-12 col-x-6 col-md-4 col-lg-4 ':
+                        category.id == item.catId,
+                    }"
+                  >
+                    <div class="items-info text-center">
+                      <p class="nameItem">
+                        <span class="titleItems">name item :_</span>
+                        {{ item.name }}
+                      </p>
+                      <p class="ItemDes">
+                        {{ item.Description }}
+                      </p>
+                      <p>
+                        <span class="price text-end"
+                          >Price {{ item.Price }}</span
+                        >
+                        <span class="price text-start">
+                          Quantities {{ item.Quantities }}</span
+                        >
+                      </p>
+
+                      <router-link
+                        :to="{
+                          name: 'updateItem',
+                          params: {
+                            itemId: item.id,
+                            locationId: restaurantId,
+                          },
+                        }"
+                        class="btn-update btn btn-info float-start"
+                      >
+                        update</router-link
+                      >
+                      <router-link
+                        :to="{
+                          name: 'DeleteItem',
+                          params: {
+                            itemId: item.id,
+                            locationId: restaurantId,
+                          },
+                        }"
+                        class="btn-update btn btn-danger float-end"
+                      >
+                        delete</router-link
+                      >
+                    </div>
                   </div>
+                  <hr />
                 </div>
               </div>
-              <hr />
             </div>
           </div>
         </div>
