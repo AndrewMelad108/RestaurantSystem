@@ -4,27 +4,39 @@
       <div class="login-form col col-lg-6">
         <form @click.prevent>
           <h1 class="text-center title-form">log in</h1>
-          <input
-            class="form-control btn-input"
-            type="email"
-            placeholder="Enter Your Email"
-            v-model="state.email"
-          />
+          <div class="form-floating">
+            <input
+              type="email"
+              class="form-control btn-input"
+              id="floatingEmail"
+              placeholder="Enter Your Name"
+              v-model.trim="state.email"
+            />
+            <label for="floatingEmail" class="text-muted">
+              Enter Your Name
+            </label>
+          </div>
           <span
-            class="alert alert-warning Errors"
+            class="alert alert-info Errors"
             role="alert"
             v-if="v$.email.$error"
           >
             {{ v$.email.$errors[0].$message }}
           </span>
-          <input
-            class="form-control btn-input"
-            type="password"
-            placeholder="Enter Your Password"
-            v-model="state.password"
-          />
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control btn-input"
+              id="floatingPassword"
+              placeholder="Enter Your Password"
+              v-model.trim="state.password"
+            />
+            <label for="floatingPassword" class="text-muted"
+              >Enter Your Password
+            </label>
+          </div>
           <span
-            class="alert alert-warning Errors"
+            class="alert alert-info Errors"
             role="alert"
             v-if="v$.password.$error"
           >
@@ -35,11 +47,8 @@
           </button>
           <span class="redirect"
             >Already ,You don't have an account ?
-            <a v-on:click="redirect('signup')">sign up</a></span
+            <a v-on:click="redirect('signUp')">sign up</a></span
           >
-          <span class="userNotFound alert alert-success" v-if="show">{{
-            returnDataNotFound
-          }}</span>
         </form>
       </div>
       <div class="image-login col col-lg-5">
@@ -51,10 +60,12 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
+import { mapActions, mapMutations, mapState } from "vuex"; // component vuex
 import useValidate from "@vuelidate/core"; //import from page
 import { required, email } from "@vuelidate/validators"; //option validate
 import { reactive, computed } from "vue"; // sub function from vue
-import { mapActions } from "vuex"; // component vuex
+
 export default {
   name: "LogInPage",
   //compostion API
@@ -78,22 +89,22 @@ export default {
     };
   },
   data: function () {
-    return {
-      returnDataNotFound: "",
-      show: false,
-    };
+    return {};
+  },
+  computed: {
+    ...mapState(["isUserLoggedIn", "isUserLoggedInId"]),
   },
   mounted() {
-    let user = localStorage.getItem("user-info");
-    if (!user) {
-      this.redirect("signUp");
+    this.isUserLogged();
+    if (this.isUserLoggedIn) {
+      console.log(this.isUserLoggedIn);
     } else {
-      console.log("user-info");
+      this.redirect("signUp");
     }
   },
-  components: {},
   methods: {
     ...mapActions(["redirect"]),
+    ...mapMutations(["isUserLogged"]),
     async login() {
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
@@ -102,14 +113,30 @@ export default {
         );
         if (result.status == 200 && result.data.length > 0) {
           localStorage.setItem("user-info", JSON.stringify(result.data[0]));
-          this.redirect("Home");
-          console.log(result);
+          Swal.fire({
+            icon: "success",
+            title: "success add user",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            this.redirect("Home");
+          }, 2000);
         } else {
-          this.show = true; //show to alert message
-          this.returnDataNotFound = "user not found"; //message
+          Swal.fire({
+            icon: "error",
+            title: "Oop!!!!!!!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       } else {
-        console.log("error");
+        Swal.fire({
+          icon: "warning",
+          title: "The Fields Are Empty",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
   },

@@ -26,6 +26,7 @@ const mutations = {
       state.isUserLoggedInId = JSON.parse(user).id;
     } else {
       state.isUserLoggedIn = false;
+      // this.commit("redirect", payload.name);
     }
   },
   async displayCategories(state, payload) {
