@@ -1,20 +1,20 @@
 <template>
   <div class="homePage">
-    <navigationComponent class="navbar" />
+    <navigationComponent />
     <introPage class="introPage" />
     <div class="container">
       <div class="row">
         <div class="home-content">
-          <addRestaurantStyle class="addRestaurantStyle" />
+          <addRestaurantStyle />
         </div>
       </div>
     </div>
-    <descriptionSite class="descriptionSite" />
+    <descriptionSite />
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import navigationComponent from "@/components/Header/navigation.vue";
 import introPage from "@/components/homeComponent/introPage.vue";
 import addRestaurantStyle from "@/components/homeComponent/addSectionRestaurantStyle.vue";
@@ -30,17 +30,21 @@ export default {
     addRestaurantStyle,
     descriptionSite,
   },
-
+  computed: {
+    ...mapState(["isUserLoggedIn", "isUserLoggedInId"]),
+  },
   mounted() {
-    let user = localStorage.getItem("user-info");
-    if (!user) {
-      this.redirect("signUp");
+    this.isUserLogged();
+    if (this.isUserLoggedIn) {
+      console.log(this.isUserLoggedIn);
     } else {
-      this.redirect("Home");
+      this.redirect("signUp");
+      console.log(this.isUserLoggedIn);
     }
   },
   methods: {
     ...mapActions(["redirect"]),
+    ...mapMutations(["isUserLogged"]),
   },
 };
 </script>

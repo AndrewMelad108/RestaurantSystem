@@ -18,7 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .descriptionSite {
-  background-image: url("@/assets/homeImages/vegetables-set-left-black-slate.jpg");
+  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
   background-size: cover;
   width: 100%;
   height: 400px;
@@ -41,10 +41,10 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 70%;
-  color: #ff7000;
+  color: black;
   line-height: 1.2;
   letter-spacing: 1px;
   font-size: 30px;
-  text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+  text-shadow: 1px 1px 2px red, 0 0 0.2em blue;
 }
 </style>

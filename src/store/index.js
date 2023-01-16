@@ -8,6 +8,7 @@ const state = {
   listOfCategories: [],
   listOfAllCategories: [],
   listOfLocations: [],
+  ThisLocation: [],
   listOfItems: {},
   listOfAllItems: [],
 };
@@ -52,19 +53,37 @@ const mutations = {
       alert("no items");
     }
   },
-  async accessUserLocations(state, payload) {
-    //access location by special user
+  async canAccessUserThisLocations(state, payload) {
+    //access all location by special user
     let locations = await axios.get(
-      `   http://localhost:3000/locations?userId=${payload.userId}&id=${payload.locationId}`
+      `   http://localhost:3000/locations?userId=${payload.userId}`
     );
     if (locations.status == 200) {
       state.listOfLocations = locations.data;
-      if (state.listOfLocations.length !== 1) {
+      let lengthOfLocations = state.listOfLocations.length;
+
+      if (lengthOfLocations == 0) {
         //not empty
         this.commit("redirect", payload.redirect);
       }
     } else {
-      alert("no locations");
+      console.log("dispaly locations");
+    }
+  },
+  async accessUserLocation(state, payload) {
+    //access location by special user
+    let location = await axios.get(
+      `   http://localhost:3000/locations?userId=${payload.userId}&id=${payload.locationId}`
+    );
+    if (location.status == 200) {
+      state.ThisLocation = location.data;
+      let locationLength = state.ThisLocation.length;
+      if (locationLength == 0) {
+        //not empty
+        this.commit("redirect", payload.redirect);
+      }
+    } else {
+      alert(" location is add by user");
     }
   },
   async accessUserThisCategories(state, payload) {

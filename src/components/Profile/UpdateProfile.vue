@@ -1,70 +1,78 @@
 <template>
-  <div class="container">
-    <div class="row updateProfileFrom">
-      <div class="updateProfile-form col-6">
-        <form @click.prevent>
-          <h1 class="text-center title-form">update Profile</h1>
+  <div class="updateProfileFrom">
+    <div class="updateProfile-form">
+      <form @click.prevent>
+        <h1 class="text-center title-form">update Profile</h1>
+        <div class="form-floating">
           <input
-            class="form-control btn-input"
             type="text"
+            class="form-control btn-input"
+            id="floatingEmail"
             placeholder="Enter Your Name"
-            v-model="name"
+            v-model.trim="name"
           />
-          <span
-            class="alert alert-warning Errors"
-            role="alert"
-            v-if="v$.name.$error"
-          >
-            {{ v$.name.$errors[0].$message }}
-          </span>
+          <label for="floatingEmail" class="text-muted">
+            Enter Your Name
+          </label>
+        </div>
+
+        <span
+          class="alert alert-warning Errors"
+          role="alert"
+          v-if="v$.name.$error"
+        >
+          {{ v$.name.$errors[0].$message }}
+        </span>
+        <div class="form-floating">
           <input
-            class="form-control btn-input"
             type="email"
-            placeholder="Enter Your Email"
-            v-model="email"
-          />
-          <span
-            class="alert alert-warning Errors"
-            role="alert"
-            v-if="v$.email.$error"
-          >
-            {{ v$.email.$errors[0].$message }}
-          </span>
-          <input
             class="form-control btn-input"
-            type="text"
-            placeholder="Enter Your Password"
-            v-model="password"
+            id="floatingEmail"
+            placeholder="Enter Your Email"
+            v-model.trim="email"
           />
-          <span
-            class="alert alert-warning Errors"
-            role="alert"
-            v-if="v$.password.$error"
-          >
-            {{ v$.password.$errors[0].$message }}
-          </span>
-          <button
-            class="btn btn-primary"
-            type="submit"
-            @click="updateProfile()"
-          >
-            edit
-          </button>
-        </form>
-      </div>
-      <div class="image-container col-5">
-        <img
-          src="@/assets/profileImages/editProfile.jpg"
-          alt="profileImage"
-          class="profileImage"
-        />
-      </div>
+          <label for="floatingEmail" class="text-muted">
+            Enter Your Email
+          </label>
+        </div>
+        <span
+          class="alert alert-warning Errors"
+          role="alert"
+          v-if="v$.email.$error"
+        >
+          {{ v$.email.$errors[0].$message }}
+        </span>
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control btn-input"
+            id="floatingPassword"
+            placeholder="Enter Your Password"
+            v-model.trim="password"
+          />
+          <label for="floatingPassword" class="text-muted">
+            Enter Your Password
+          </label>
+        </div>
+
+        <span
+          class="alert alert-warning Errors"
+          role="alert"
+          v-if="v$.password.$error"
+        >
+          {{ v$.password.$errors[0].$message }}
+        </span>
+        <button class="btn btn-primary" type="submit" @click="updateProfile()">
+          edit
+        </button>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 import useValidate from "@vuelidate/core"; //import from page
 import { required, email, minLength } from "@vuelidate/validators"; //option validate
 import { mapActions } from "vuex";
@@ -79,7 +87,6 @@ export default {
       userId: "",
     };
   },
-  components: {},
   mounted() {
     let user = JSON.parse(localStorage.getItem("user-info"));
     if (user) {
@@ -118,9 +125,16 @@ export default {
           }
         );
         if (result.status == 200) {
-          console.log("the data is update");
           localStorage.setItem("user-info", JSON.stringify(result.data));
-          this.redirect("Profile");
+          Swal.fire({
+            icon: "success",
+            title: "Update succeeded",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            this.redirect("Home");
+          }, 2000);
         } else {
           console.log("the data is not update");
         }
@@ -133,13 +147,18 @@ export default {
 </script>
 <style scoped>
 .updateProfileFrom {
-  display: flex;
-  align-items: center;
-  text-transform: capitalize;
+  background-image: url("@/assets/back.jpg");
+  background-size: cover;
+  background-attachment: center center;
+  width: 100%;
+  min-height: 590px;
 }
+
 .updateProfile-form {
-  padding: 0 10px;
-  margin-top: 50px;
+  display: block;
+  width: 50%;
+  margin: auto;
+  padding: 6% 0;
 }
 .updateProfile-form .title-form {
   font-size: 48px !important;

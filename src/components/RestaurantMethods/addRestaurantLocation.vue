@@ -1,71 +1,98 @@
 <template>
   <div class="addRestaurant">
-    <navigationComponent class="navbar" />
-    <h1 class="addRestaurant-title text-center mb-5">
-      <i>add restaurant</i>
-    </h1>
-    <div class="addRestaurant-form">
-      <!--nameRestaurant input-->
-      <label class="label-title">Name :</label>
-      <input
-        class="form-control btn-input"
-        type="text"
-        placeholder="Enter Your Name Restaurant"
-        v-model="nameRestaurant"
-      />
-      <span
-        class="alert alert-success Errors"
-        role="alert"
-        v-if="v$.nameRestaurant.$error"
-      >
-        {{ v$.nameRestaurant.$errors[0].$message }}
-      </span>
-      <!--input phone-->
-      <label class="label-title">Phone :</label>
-      <input
-        class="form-control btn-input"
-        type="number"
-        placeholder="Enter Your Phone"
-        v-model="phoneRestaurant"
-      />
-      <span
-        class="alert alert-success Errors"
-        role="alert"
-        v-if="v$.phoneRestaurant.$error"
-      >
-        {{ v$.phoneRestaurant.$errors[0].$message }}
-      </span>
-      <!--input addressRestaurant-->
-      <label class="label-title">address :</label>
-      <input
-        class="form-control btn-input"
-        type="text"
-        placeholder="Enter Your Address"
-        v-model="addressRestaurant"
-      />
-      <span
-        class="alert alert-success Errors"
-        role="alert"
-        v-if="v$.addressRestaurant.$error"
-      >
-        {{ v$.addressRestaurant.$errors[0].$message }}
-      </span>
-      <div class="add-restaurant-modal-footer">
-        <button type="button" class="btn submit" @click="addLocation()">
-          create
-        </button>
+    <navigationComponent />
+    <div class="addRestaurant-content">
+      <h1 class="addRestaurant-title text-center mb-5">
+        <i>add restaurant</i>
+      </h1>
+      <div class="container">
+        <div class="row">
+          <div class="addRestaurant-form col-md-8">
+            <!--nameRestaurant input-->
+            <label class="label-title">Name :</label>
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control btn-input"
+                id="floatingName"
+                placeholder="Enter Your Name Restaurant"
+                v-model.trim="nameRestaurant"
+              />
+              <label for="floatingName" class="text-muted">
+                Enter Your Name Restaurant
+              </label>
+            </div>
+            <span
+              class="alert alert-danger Errors"
+              role="alert"
+              v-if="v$.nameRestaurant.$error"
+            >
+              {{ v$.nameRestaurant.$errors[0].$message }}
+            </span>
+            <!--input phone-->
+            <label class="label-title">Phone :</label>
+            <div class="form-floating">
+              <input
+                type="tel"
+                class="form-control btn-input"
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                id="floatingPhone"
+                placeholder="Enter Your Phone Restaurant"
+                v-model.trim="phoneRestaurant"
+              />
+              <label for="floatingPhone" class="text-muted">
+                Enter Your Phone Restaurant
+              </label>
+            </div>
+
+            <span
+              class="alert alert-danger Errors"
+              role="alert"
+              v-if="v$.phoneRestaurant.$error"
+            >
+              {{ v$.phoneRestaurant.$errors[0].$message }}
+            </span>
+            <!--input addressRestaurant-->
+            <label class="label-title">Address :</label>
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control btn-input"
+                id="floatingAddress"
+                placeholder="Enter Your Address Restaurant"
+                v-model.trim="addressRestaurant"
+              />
+              <label for="floatingPhone" class="text-muted">
+                Enter Your Address Restaurant
+              </label>
+            </div>
+            <span
+              class="alert alert-danger Errors"
+              role="alert"
+              v-if="v$.addressRestaurant.$error"
+            >
+              {{ v$.addressRestaurant.$errors[0].$message }}
+            </span>
+            <div class="add-restaurant-modal-footer">
+              <button type="button" class="btn submit" @click="addLocation()">
+                Create
+              </button>
+            </div>
+            <!--end form-->
+          </div>
+        </div>
       </div>
-      <!--end form-->
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from "vuex"; // component vuex
 import navigationComponent from "@/components/Header/navigation.vue";
 import axios from "axios";
 import useValidate from "@vuelidate/core"; //import from page
 import { required, minLength } from "@vuelidate/validators"; //option validate
+import Swal from "sweetalert2";
 export default {
   name: "addRestaurantLocation",
   data: function () {
@@ -75,7 +102,6 @@ export default {
       phoneRestaurant: "",
       addressRestaurant: "",
       userId: "",
-      show: true,
     };
   },
   validations() {
@@ -96,6 +122,24 @@ export default {
   components: { navigationComponent },
   methods: {
     ...mapActions(["redirect"]),
+    Swal() {
+      Swal.fire({
+        title: "Do You Want To Save The Restaurant?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Saved!", "", "success");
+          setTimeout(() => {
+            this.redirect("RestaurantsComp");
+          }, 2000);
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
+      });
+    },
     async addLocation() {
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
@@ -114,10 +158,15 @@ export default {
             "restaurant-location",
             JSON.stringify(restaurantLocation.data)
           );
+          this.Swal();
         }
-        this.redirect("RestaurantsComp");
       } else {
-        console.warn("error validate");
+        Swal.fire({
+          icon: "warning",
+          title: "The Fields Are Empty",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
   },
@@ -125,15 +174,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addRestaurant {
+.addRestaurant-content {
   padding: 15px;
   position: relative;
   z-index: 12222;
-  background-image: url("@/assets/homeImages/add-restaurant.jpg");
+  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
   background-size: cover;
+  background-attachment: center center;
   width: 100%;
   min-height: 600;
   position: absolute;
+  color: black;
 }
 
 .addRestaurant-title {
@@ -143,45 +194,38 @@ export default {
   font-weight: bold;
   text-transform: capitalize;
   margin-top: 2%;
-  padding-top: 7%;
+}
+.addRestaurant-form {
+  //center form
+  display: block;
+  margin: auto;
 }
 .label-title::before {
   content: "*";
   color: black;
 }
 .label-title {
-  display: block;
-  width: 70%;
   font-size: 25px;
   font-weight: bold;
   font-family: "Sevillana", cursive;
   margin: auto;
   padding: 10px 0;
-  color: #f7f5eb;
+  color: black;
 }
 
 .btn-input {
   width: 100%;
   padding: 10 px;
   font-size: 20px;
-  text-indent: 5px;
   border: 1px black solid;
   background-color: transparent !important;
-  width: 70%;
-  margin: auto;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   color: black;
-}
-.btn-input::placeholder {
-  color: black;
-  font-size: 25px;
 }
 .Errors {
-  display: block;
-  width: 70% !important;
-  margin: auto;
-  margin-bottom: 2%;
-  font-size: 25px;
+  display: inline-block;
+  width: 100%;
+  margin: 0;
 }
 .submit {
   display: block;
@@ -192,6 +236,7 @@ export default {
   background-color: black;
   font-size: 25px;
   font-weight: bold;
+  margin-top: 10px;
   margin: auto;
   text-transform: capitalize;
   border-radius: 10%;
@@ -200,7 +245,7 @@ export default {
 .submit:hover {
   padding-left: 2%;
   background-color: transparent;
-  color: #fff;
+  color: #03c988;
   border: black 1.5px solid;
 }
 </style>

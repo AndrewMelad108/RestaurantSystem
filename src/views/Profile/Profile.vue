@@ -1,15 +1,8 @@
 <template>
-  <div class="container profile-content">
-    <div class="row">
-      <div class="image-container col-5">
-        <img
-          src="@/assets/profileImages/profileImage.jpg"
-          alt="profileImage"
-          class="profileImage"
-        />
-      </div>
-      <div class="profileForm col-7">
-        <profileForm />
+  <div class="profile-content">
+    <div class="container">
+      <div class="row">
+        <profileForm class="profileForm" />
       </div>
     </div>
   </div>
@@ -25,17 +18,15 @@ export default {
   components: {
     profileForm,
   },
-  methods: {},
 };
 </script>
 <style scoped lang="scss">
 .profile-content {
-  height: 50% !important;
-}
-.image-container .profileImage {
-  max-height: 19%;
-}
-.profileForm {
-  text-align: center;
+  background-image: url("@/assets/back.jpg");
+  background-size: cover;
+  background-attachment: center center;
+  width: 100%;
+  min-height: 590px;
+  padding: 5% 25%;
 }
 </style>

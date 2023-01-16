@@ -1,52 +1,69 @@
 <template>
   <div class="Restaurants">
-    <navigationComponent class="navbar" />
-    <h1 class="Restaurants-title text-center">restaurant locations</h1>
-    <button
-      class="btn btn-danger d-block ml-auto mb-4"
-      @click="DeleteAllLocations()"
-    >
-      DeleteAllLocations
-    </button>
-    <div class="container">
-      <div class="row">
-        <div
-          class="card col-4"
-          v-for="restaurant in restaurants"
-          :key="restaurant.index"
-        >
-          <div class="card-body">
-            <h4 class="card-name">
-              {{ "Name :   " + restaurant.nameRestaurant }}
-            </h4>
-            <h5 class="card-id">{{ "ID :" + restaurant.id }}</h5>
-            <h5 class="card-subtitle mb-2">
-              Phone : <span class="ph"> {{ restaurant.phoneRestaurant }}</span>
-            </h5>
-            <h6 class="card-subtitle mb-2">
-              addressRestaurant :
-              <span class="ph"> {{ restaurant.addressRestaurant }}</span>
-            </h6>
-            <div class="group-button">
-              <div class="row">
-                <button
-                  class="card-link btn btn-info d-block col-3 m-auto"
-                  @click="updateRestaurant(restaurant.id)"
-                >
-                  Update
-                </button>
-                <button
-                  class="card-link btn btn-dark d-block col-3 m-auto"
-                  @click="goMenuRestaurant(restaurant.id)"
-                >
-                  Menu
-                </button>
-                <button
-                  class="card-link btn btn-danger d-block col-3 m-auto"
-                  @click="goDeleteRestaurant(restaurant.id)"
-                >
-                  Delete
-                </button>
+    <navigationComponent />
+    <div class="Restaurants-content text-center">
+      <h1 class="Restaurants-title text-center">restaurant locations</h1>
+      <router-link
+        :to="{ name: 'DeleteAllLocations' }"
+        class="btn btn-danger btn-delete-all-location"
+      >
+        DeleteAllLocations
+      </router-link>
+      <div class="container">
+        <div class="row">
+          <div
+            class="card col-4"
+            v-for="restaurant in restaurants"
+            :key="restaurant.index"
+          >
+            <div class="card-body">
+              <h4 class="card-name">
+                {{ "Name :   " + restaurant.nameRestaurant }}
+              </h4>
+              <h5 class="card-subtitle mb-2">
+                Phone :
+                <span class="ph"> {{ restaurant.phoneRestaurant }}</span>
+              </h5>
+              <h6 class="card-subtitle mb-2">
+                addressRestaurant :
+                <span class="ph"> {{ restaurant.addressRestaurant }}</span>
+              </h6>
+              <div class="group-button">
+                <div class="row">
+                  <router-link
+                    :to="{
+                      name: 'updateRestaurant',
+                      params: {
+                        id: restaurant.id,
+                      },
+                    }"
+                    class="card-link btn btn-info d-block col-3 m-auto"
+                  >
+                    Update
+                  </router-link>
+                  <router-link
+                    :to="{
+                      name: 'MenuComp',
+                      params: {
+                        restaurantId: restaurant.id,
+                      },
+                    }"
+                    class="card-link btn btn-dark d-block col-3 m-auto"
+                  >
+                    Menu
+                  </router-link>
+                  <router-link
+                    :to="{
+                      name: 'deleteRestaurant',
+                      params: {
+                        deleteRestaurant: restaurant.id,
+                      },
+                    }"
+                    class="card-link btn btn-danger d-block col-3 m-auto"
+                  >
+                    Delete
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -57,7 +74,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"; // component vuex
+import { mapActions, mapMutations, mapState } from "vuex"; // component vuex
 import navigationComponent from "@/components/Header/navigation.vue";
 import axios from "axios";
 export default {
@@ -71,12 +88,19 @@ export default {
   components: {
     navigationComponent,
   },
+  computed: {
+    ...mapState(["isUserLoggedIn", "isUserLoggedInId"]),
+  },
   mounted() {
     let user = JSON.parse(localStorage.getItem("user-info"));
-    console.log(user);
     if (user) {
       this.userID = user.id;
       this.getRestaurant();
+      this.canAccessUserThisLocations({
+        // close display location without restaurant
+        userId: this.userID,
+        redirect: "Home",
+      });
     }
   },
   methods: {
@@ -88,55 +112,43 @@ export default {
         });
     },
     ...mapActions(["redirect"]),
-    updateRestaurant(id) {
-      this.$router.push({ path: `/updateRestaurant/${id}` });
-    },
-    goDeleteRestaurant(deleteRestaurant) {
-      this.$router.push({
-        name: "deleteRestaurant",
-        params: {
-          deleteRestaurant: deleteRestaurant,
-        },
-      });
-    },
-    DeleteAllLocations() {
-      this.$router.push({ name: "DeleteAllLocations" });
-    },
-    goMenuRestaurant(restaurantId) {
-      this.$router.push({ path: `/MenuComp/${restaurantId}` });
-    },
+    ...mapMutations(["canAccessUserThisLocations"]),
   },
-  created() {},
 };
 </script>
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital@1&display=swap");
-.Restaurants {
+.Restaurants-content {
   font-family: "Crimson Text", serif;
-  background-image: url("@/assets/homeImages/golden-cutlery-with-textile-plate-dark-background-top-view.jpg");
+  background-image: url("@/assets/homeImages/introPage.jpg");
   background-size: cover;
-  background-attachment: center center;
+  background-origin: center center;
   width: 100%;
-  height: 1000px;
-  color: white;
+  min-height: 534px;
+  color: black !important;
 }
 .Restaurants-title {
   margin: auto;
   padding: 30px 0;
   text-transform: capitalize;
-  color: #8b6a2a;
+  color: black !important;
   font-size: 35px;
   padding-top: 7%;
   text-shadow: 1px 1px 2px #333;
+}
+.btn-delete-all-location {
+  width: auto;
+  margin-left: auto;
 }
 ////////////////////////start card design ////////////////////////
 .card {
   padding: 10px !important;
   background-color: transparent;
-  border: 0px;
+  border: 0;
+  height: 200px;
 }
 .ph {
-  color: #8b6a2a !important;
+  color: black !important;
 }
 </style>

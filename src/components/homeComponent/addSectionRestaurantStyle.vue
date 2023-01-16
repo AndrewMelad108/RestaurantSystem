@@ -14,7 +14,7 @@
       </div>
       <div class="addRestaurantStyle-image col-5">
         <img
-          src="@/assets/homeImages/restaurant-interior.jpg"
+          src="@/assets/homeImages/add.png"
           class="image-restaurant"
           alt="image-restaurant"
         />
@@ -55,7 +55,7 @@ export default {
   display: inline-block;
   width: 40%;
   height: 1%;
-  background: #ff7000;
+  background-color: black;
 }
 // .title-info:hover .title-line {
 
@@ -83,7 +83,7 @@ export default {
   width: 30%;
   padding-left: 30px;
   background-color: black;
-  color: #ff7000;
+  color: #03c988;
   border: 0;
 }
 .addRestaurantStyle-image .image-restaurant {

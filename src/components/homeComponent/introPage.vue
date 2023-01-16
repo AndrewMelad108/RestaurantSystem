@@ -4,7 +4,7 @@
       <p class="lead intro-restaurant-des">
         If you would like to see the restaurants of the guest and know more
         about the restaurants and their places and their restaurants, click on
-        Show
+
         <button
           class="intro-restaurant-btn btn"
           @click="redirect('RestaurantsComp')"
@@ -32,7 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 .intro-restaurant {
-  background-image: url("@/assets/homeImages/golden-cutlery-with-textile-plate-dark-background-top-view.jpg");
+  background-image: url("@/assets/homeImages/introPage.jpg");
   width: 100%;
   height: 600px;
   background-origin: center center;
@@ -47,7 +47,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 25px;
-  color: #dc0000 !important;
+  color: black !important;
   text-transform: capitalize;
   font-weight: bold;
   letter-spacing: 1px;
@@ -66,7 +66,7 @@ export default {
 }
 .intro-restaurant-btn:hover {
   width: 35%;
-  border: 1px solid #fff;
+  border: 1px solid black;
   color: #fff;
   font-size: 25px;
 }

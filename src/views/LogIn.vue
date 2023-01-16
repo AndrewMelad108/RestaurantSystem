@@ -205,13 +205,4 @@ export default {
   color: #ff2d9b;
   font-weight: bold;
 }
-.login-form .userNotFound {
-  display: block;
-  margin: auto;
-  text-align: center;
-  color: red;
-  font-size: 20px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
 </style>

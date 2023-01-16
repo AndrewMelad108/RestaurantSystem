@@ -37,7 +37,7 @@
 
 <script>
 import axios from "axios";
-import { mapActions } from "vuex"; // component vuex
+import { mapActions, mapMutations } from "vuex"; // component vuex
 import navigationComponent from "@/components/Header/navigation.vue";
 export default {
   name: "deleteRestaurant",
@@ -79,10 +79,17 @@ export default {
     } else {
       this.userId = JSON.parse(user).id;
       this.getDeleteRestaurant();
+      this.accessUserLocation({
+        //access location
+        userId: this.userId,
+        locationId: this.restaurantId,
+        redirect: "Home",
+      });
     }
   },
   methods: {
     ...mapActions(["redirect"]),
+    ...mapMutations(["accessUserLocation"]),
     async getDeleteRestaurant() {
       let allResultCategories = [];
       for (let i = 0; i < this.listAllCategories.length; i++) {

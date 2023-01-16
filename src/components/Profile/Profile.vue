@@ -1,35 +1,52 @@
 <template>
-  <div class="container profileFrom">
-    <div class="row">
-      <div class="profile-form">
-        <form @click.prevent>
-          <h1 class="text-center title-form">profile info</h1>
+  <div class="profileFrom">
+    <div class="profile-form">
+      <form @click.prevent>
+        <h1 class="text-center title-form">profile info</h1>
+        <div class="form-floating">
           <input
-            class="form-control btn-input"
             type="text"
+            class="form-control btn-input"
+            id="floatingEmail"
             placeholder="Enter Your Name"
-            v-model="name"
+            v-model.trim="name"
             disabled
           />
+          <label for="floatingEmail" class="text-muted">
+            Enter Your Name
+          </label>
+        </div>
+        <div class="form-floating">
           <input
-            class="form-control btn-input"
             type="email"
-            placeholder="Enter Your Email"
-            v-model="email"
-            disabled
-          />
-          <input
             class="form-control btn-input"
-            type="text"
-            placeholder="Enter Your Password"
-            v-model="password"
+            id="floatingEmail"
+            placeholder="Enter Your Email"
+            v-model.trim="email"
             disabled
           />
-          <button class="btn btn-primary" type="submit" @click="Profile()">
-            updateProfile
-          </button>
-        </form>
-      </div>
+          <label for="floatingEmail" class="text-muted">
+            Enter Your Email
+          </label>
+        </div>
+
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control btn-input"
+            id="floatingPassword"
+            placeholder="Enter Your Password"
+            v-model.trim="password"
+            disabled
+          />
+          <label for="floatingPassword" class="text-muted">
+            Enter Your Password
+          </label>
+        </div>
+        <button class="btn btn-primary" type="submit" @click="Profile()">
+          UpdateProfile
+        </button>
+      </form>
     </div>
   </div>
 </template>
@@ -70,11 +87,11 @@ export default {
   display: flex;
   align-items: center;
   text-transform: capitalize;
-  min-width: 400px;
+  width: 100%;
   height: auto !important;
 }
 .profile-form {
-  padding: 0 10px;
+  width: 100%;
 }
 .profile-form .title-form {
   font-size: 48px !important;
@@ -86,7 +103,6 @@ export default {
 }
 .btn-input {
   margin: 20px auto;
-  width: 450px;
   padding: 5px;
   font-size: 20px;
   text-indent: 5px;

@@ -25,7 +25,7 @@
             <a class="nav-link" href="#">Home </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#">About</a>
           </li>
           <router-link :to="{ name: 'Profile' }" class="userName nav-item">
             <span>{{ "Hi" + " " + userName }}</span>
@@ -47,6 +47,7 @@ export default {
       userName: "",
     };
   },
+
   mounted() {
     let user = JSON.parse(localStorage.getItem("user-info")).Name;
     this.userName = user;
@@ -65,24 +66,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 .Navbar {
-  background-color: transparent !important;
-  position: absolute;
   width: 100% !important;
+  background-color: transparent !important;
 }
 .navbar-content {
-  padding: 10px 25px !important;
+  padding: 0px 25px !important;
   width: 100% !important;
   background-color: transparent !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 .navbar-content .navbar-brand {
   transition: 0.5s all ease-in-out;
-  color: #dc0000;
+  color: #03c988;
   font-size: 30px;
   font-weight: bold;
 }
 .navbar-content .navbar-brand:hover {
   //hover brand
-  color: #18aecc !important;
+  color: black !important;
   padding-right: 20px;
   letter-spacing: 2px !important;
 }
@@ -94,7 +96,7 @@ export default {
   cursor: pointer;
   margin: auto;
   text-decoration: none !important;
-  color: #dc0000;
+  color: #03c988;
   font-size: 22px;
   font-weight: bold;
 }
@@ -108,11 +110,11 @@ export default {
   text-align: center !important;
   font-size: 22px;
   font-weight: bold;
-  color: #dc0000;
+  color: #03c988;
 }
 .navbar-links ul li a:hover,
 .userName:hover {
-  color: #fff !important;
+  color: black !important;
   padding-right: 20px;
   letter-spacing: 2px !important;
 }
