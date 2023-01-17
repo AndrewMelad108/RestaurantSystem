@@ -2,17 +2,21 @@ import { createStore } from "vuex";
 import axios from "axios";
 import router from "@/router/index";
 const state = {
-  isUserLoggedIn: "",
+  isUserLoggedIn: false,
   isUserLoggedInId: "",
   numOfCategories: "",
   listOfCategories: [],
   listOfAllCategories: [],
   listOfLocations: [],
   ThisLocation: [],
-  listOfItems: {},
+  listOfItems: [],
   listOfAllItems: [],
 };
-const getters = {};
+const getters = {
+  isUserLoggedIn(state) {
+    return state.isUserLoggedIn;
+  },
+};
 const mutations = {
   redirect(state, payload) {
     //function redirect from pages
@@ -40,17 +44,6 @@ const mutations = {
       state.numOfCategories = state.listOfAllCategories.length;
     } else {
       alert("no categories");
-    }
-  },
-  async getUserItems(state, payload) {
-    //access items by location user
-    let AllitemsOfCategories = await axios.get(
-      `http://localhost:3000/items?userId=${payload.userId}&locationId=${payload.locationId}`
-    );
-    if (AllitemsOfCategories.status == 200) {
-      state.listOfAllItems = AllitemsOfCategories.data;
-    } else {
-      alert("no items");
     }
   },
   async canAccessUserThisLocations(state, payload) {
@@ -101,20 +94,20 @@ const mutations = {
       alert("no categories");
     }
   },
-  async accessUserThisItems(state, payload) {
+  async canAccessUserThisItems(state, payload) {
     //access items by special user
     let items = await axios.get(
-      `http://localhost:3000/items?userId=${payload.userId}&locationId=${payload.locationId}&id=${payload.id}`
+      `http://localhost:3000/items?userId=${payload.userId}&locationId=${payload.locationId}&catId=${payload.catId}`
     );
     if (items.status == 200) {
-      state.listOfItems = items.data[0];
-      if (state.listOfItems.length > 0) {
-        //not empty
-        // console.log(state.listOfItems.length);
-        // this.commit("redirect", payload.redirect);
+      state.listOfItems = items.data;
+      let lengthOfItems = state.listOfItems.length;
+      console.log(lengthOfItems);
+      if (lengthOfItems === 0) {
+        this.commit("redirect", payload.redirect);
       }
     } else {
-      alert("no items");
+      alert("show  items");
     }
   },
 };

@@ -13,10 +13,10 @@ export default {
   components: {},
   methods: {},
   mounted() {
-    let user = JSON.parse(localStorage.getItem("user-info"));
-    if (!user) {
-      this.redirect("Login");
-    }
+    // let user = JSON.parse(localStorage.getItem("user-info"));
+    // if (!user) {
+    //   this.redirect("Login");
+    // }
   },
 };
 </script>

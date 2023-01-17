@@ -4,85 +4,7 @@
       "Name": "asd@asd.com",
       "Password": "asd@asd.com",
       "Email": "asd@asd.com",
-      "id": 1
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "vasd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 2
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 3
-    },
-    {
-      "Name": "zCZcZcxcxzc",
-      "Password": "zxvzvcvcxvxcvxc",
-      "Email": "ccvcxvxcvxcvxcvx@ddgvdxv.com",
-      "id": 4
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 5
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 6
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
       "id": 7
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 8
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 9
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 10
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 11
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 12
-    },
-    {
-      "Name": "asd@asd.com",
-      "Password": "asd@asd.com",
-      "Email": "asd@asd.com",
-      "id": 13
-    },
-    {
-      "Name": "Andrew Melad",
-      "Password": "asd123@asd.com",
-      "Email": "asd123@asd.com",
-      "id": 14
     }
   ],
   "locations": [
@@ -90,80 +12,89 @@
       "nameRestaurant": "xzvxzv442224",
       "phoneRestaurant": 535355424242,
       "addressRestaurant": "24242424242424",
-      "userId": 3,
+      "userId": 7,
       "id": 4
-    },
-    {
-      "nameRestaurant": "zzzzzzzzzzzzzz",
-      "phoneRestaurant": "8654656456456ggg",
-      "addressRestaurant": "4564tfgbdfdfgdfdf",
-      "userId": 13,
-      "id": 5
-    },
-    {
-      "nameRestaurant": "xczxczxczxcz",
-      "phoneRestaurant": "1321545464654654",
-      "addressRestaurant": "zxczxczxczx",
-      "userId": 13,
-      "id": 6
-    },
-    {
-      "nameRestaurant": "xxcxcxcxcxc",
-      "phoneRestaurant": "cxxcxcxccxcxc",
-      "addressRestaurant": "xcccxcxcxcxcxccxc",
-      "userId": 13,
-      "id": 7
     },
     {
       "nameRestaurant": "asd@asd.com",
       "phoneRestaurant": "asd@asd.com",
       "addressRestaurant": "asd@asd.com",
-      "userId": 13,
-      "id": 8
-    },
-    {
-      "nameRestaurant": "شىيقثصيبيبيب",
-      "phoneRestaurant": "czczxczxczx",
-      "addressRestaurant": "czxczxczxczx",
-      "userId": 14,
-      "id": 9
-    },
-    {
-      "nameRestaurant": "xcvxcvxcvxc",
-      "phoneRestaurant": "xcvxcvxcvxcvxcv",
-      "addressRestaurant": "xcvxcvxcvxcvxcvx",
-      "userId": 14,
-      "id": 10
-    },
-    {
-      "nameRestaurant": "bvnbnvbvbnvb",
-      "phoneRestaurant": "nvbnvbnvbnvbnbv",
-      "addressRestaurant": "bvnvbnvbvb",
-      "userId": 14,
-      "id": 11
-    },
-    {
-      "nameRestaurant": "bvnbnvbvbnvb",
-      "phoneRestaurant": "nvbnvbnvbnvbnbv",
-      "addressRestaurant": "bvnvbnvbvb",
-      "userId": 14,
-      "id": 12
-    },
-    {
-      "nameRestaurant": "zxcxczxczx",
-      "phoneRestaurant": "zxczxczxczx",
-      "addressRestaurant": "zxczxczxcxzczx",
-      "userId": 14,
-      "id": 13
+      "userId": 7,
+      "id": 16
     }
   ],
   "categories": [
     {
-      "name": "xxcxc",
-      "userId": 13,
-      "locationId": 5,
+      "name": "BreakFast",
+      "userId": 7,
+      "locationId": 16,
       "id": 1
+    },
+    {
+      "name": "Lunch",
+      "userId": 7,
+      "locationId": 16,
+      "id": 2
+    },
+    {
+      "name": "Dinner",
+      "userId": 7,
+      "locationId": 16,
+      "id": 3
+    },
+    {
+      "name": "Fred Check",
+      "userId": 7,
+      "locationId": 16,
+      "id": 4
+    },
+    {
+      "name": "Drink",
+      "userId": 7,
+      "locationId": 16,
+      "id": 5
     }
   ],
-  "items": []
+  "items": [
+    {
+      "name": "food1",
+      "Quantities": 12,
+      "Price": "123.00",
+      "Description": "daszsczxczxczxczxczxc",
+      "catId": 1,
+      "userId": 7,
+      "locationId": 16,
+      "id": 1
+    },
+    {
+      "name": "food2",
+      "Quantities": 22,
+      "Price": "23.00",
+      "Description": "zxzxczxcxzczxc",
+      "catId": 1,
+      "userId": 7,
+      "locationId": 16,
+      "id": 2
+    },
+    {
+      "name": "food9",
+      "Quantities": 55,
+      "Price": "1235.00",
+      "Description": "ggcvncxfgxjghbdzfhbzd",
+      "catId": 1,
+      "userId": 7,
+      "locationId": 16,
+      "id": 3
+    },
+    {
+      "name": "food8",
+      "Quantities": 543543,
+      "Price": "43453453.00",
+      "Description": "xvbvcbccvbgfhfgjgfjf",
+      "catId": 1,
+      "userId": 7,
+      "locationId": 16,
+      "id": 4
+    }
+  ]
 }

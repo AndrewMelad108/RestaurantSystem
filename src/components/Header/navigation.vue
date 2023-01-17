@@ -68,6 +68,7 @@ export default {
 .Navbar {
   width: 100% !important;
   background-color: transparent !important;
+  --bs-navbar-padding-y: 0 !important;
 }
 .navbar-content {
   padding: 0px 25px !important;

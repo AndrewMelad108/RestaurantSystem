@@ -14,12 +14,17 @@
             >
               DELETEALL
             </button>
-            <button
+            <router-link
+              :to="{
+                name: 'MenuComp',
+                params: {
+                  restaurantId: locationId,
+                },
+              }"
               class="card-link btn btn-dark d-block col-5 m-auto"
-              @click="backView()"
             >
               BACK
-            </button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -95,14 +100,6 @@ export default {
           allResultItems.push(false);
         }
       }
-    },
-    backView() {
-      this.$router.push({
-        name: "ViewCategories",
-        params: {
-          locationId: this.locationId,
-        },
-      });
     },
   },
 };

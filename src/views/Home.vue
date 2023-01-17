@@ -34,12 +34,11 @@ export default {
     ...mapState(["isUserLoggedIn", "isUserLoggedInId"]),
   },
   mounted() {
-    this.isUserLogged();
-    if (this.isUserLoggedIn) {
+    let user = localStorage.getItem("user-info");
+    if (user) {
       console.log(this.isUserLoggedIn);
     } else {
       this.redirect("signUp");
-      console.log(this.isUserLoggedIn);
     }
   },
   methods: {

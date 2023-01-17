@@ -152,22 +152,6 @@ export default {
             "restaurant-location",
             JSON.stringify(restaurantLocation.data)
           );
-          Swal.fire({
-            title: "Are you sure to save the update for the restaurant?",
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't save`,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire("Saved!", "", "success");
-              setTimeout(() => {
-                this.redirect("RestaurantsComp");
-              }, 2000);
-            } else if (result.isDenied) {
-              Swal.fire("Changes are not saved", "", "info");
-            }
-          });
         }
         Swal.fire({
           icon: "success",

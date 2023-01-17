@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+// import store from "../store/index";
 import SignUpForm from "../views/SignUp.vue";
 import LogInPage from "../views/LogIn.vue";
 import profilePage from "../views/Profile/Profile.vue";
@@ -10,7 +11,6 @@ import updateRestaurant from "../components/RestaurantMethods/updateRestaurant.v
 import deleteRestaurant from "../components/RestaurantMethods/deleteRestaurant.vue";
 import DeleteAllLocations from "../components/RestaurantMethods/DeleteAllLocations.vue";
 import MenuComp from "../components/Menu/menuComp.vue";
-import ViewCategories from "../components/Menu/Categories/ViewCategories.vue";
 import AddCategories from "../components/Menu/Categories/addCategories.vue";
 import UpdateCategories from "../components/Menu/Categories/updateCategories.vue";
 import DeleteCategories from "../components/Menu/Categories/deleteCategories.vue";
@@ -18,23 +18,18 @@ import DeleteAllCategories from "../components/Menu/Categories/DeleteAllCategori
 import addItems from "../components/Menu/Items/addItems.vue";
 import updateItem from "../components/Menu/Items/UpdateItems.vue";
 import DeleteItem from "../components/Menu/Items/DeleteItem.vue";
+import ItemsCategory from "../components/Menu/Items/Items.vue";
 import errorPage from "../views/Error.vue";
 const routes = [
   {
     path: "/signup",
     name: "signUp",
     component: SignUpForm,
-    meta: {
-      requireAuth: true,
-    },
   },
   {
     path: "/login",
     name: "Login",
     component: LogInPage,
-    meta: {
-      requireAuth: true,
-    },
   },
   {
     path: "/home",
@@ -43,22 +38,30 @@ const routes = [
     meta: {
       requireAuth: true,
     },
-    children: [],
   },
   {
     path: "/RestaurantsComp",
     name: "RestaurantsComp",
     component: RestaurantsComp,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/add-Restaurant-Location",
     name: "addRestaurantLocation",
     component: addRestaurantLocation,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/updateRestaurant/:id",
     name: "updateRestaurant",
     component: updateRestaurant,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/updateProfile",
@@ -72,11 +75,17 @@ const routes = [
     path: "/delete-Restaurant/:deleteRestaurant",
     name: "deleteRestaurant",
     component: deleteRestaurant,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/DeleteAllLocations",
     name: "DeleteAllLocations",
     component: DeleteAllLocations,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/profile",
@@ -90,14 +99,6 @@ const routes = [
     path: "/MenuComp/:restaurantId",
     name: "MenuComp",
     component: MenuComp,
-    meta: {
-      requireAuth: true,
-    },
-  },
-  {
-    path: "/MenuComp/view/:locationId",
-    name: "ViewCategories",
-    component: ViewCategories,
     meta: {
       requireAuth: true,
     },
@@ -159,6 +160,14 @@ const routes = [
     },
   },
   {
+    path: "/MenuComp/display/loc/:locationId/category/:catId",
+    name: "ItemsCategory",
+    component: ItemsCategory,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
     path: "/:catchAll(.*)", //error page router in last object
     name: "Error 404",
     component: errorPage,
@@ -171,14 +180,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-router.beforeEach((to, from, next) => {
-  //   if (to.meta.requireAuth) {
-  document.title = to.name;
-  //     to.fullPath = "/signUp";
-  //     // if (from.name === undefined) {
-  //     //   document.title = process.env.TITLE_APP_NAME;
-  //     // }
-  //   }
-  next();
-});
+// router.beforeEach((to, from, next) => {
+//   console.log(store.getters.isUserLoggedIn);
+
+//   if (to.name !== "signUp") {
+//     if (store.getters.isUserLoggedIn == false) {
+//       store.commit("isUserLogged");
+//       router.push("/signUp");
+//     }
+//   } else next();
+// });
+
 export default router;

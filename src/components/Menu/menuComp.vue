@@ -1,89 +1,84 @@
 <template>
   <div class="MenuComp">
     <navigationComponent class="navbar" />
-    <div class="container">
-      <div class="menuContent">
+    <div class="menuContent">
+      <div class="container-fluid">
         <div class="row">
-          <button
-            class="btn btn-info menuContent-add-categories col-6"
-            @click="goToAddCategories()"
+          <router-link
+            :to="{
+              name: 'AddCategories',
+              params: {
+                locationId: restaurantId,
+              },
+            }"
+            class="btn btn-success menuContent-add-categories"
           >
-            Add/View categories
-          </button>
-          <button
-            class="btn btn-info menuContent-add-item col-6"
+            AddCategories
+          </router-link>
+          <router-link
+            :to="{
+              name: 'DeleteAllCategories',
+              params: {
+                locationId: restaurantId,
+              },
+            }"
+            class="btn btn-danger menuContent-add-item"
+          >
+            DeleteAllCategories</router-link
+          >
+
+          <router-link
+            :to="{
+              name: 'addItems',
+              params: {
+                locationId: restaurantId,
+              },
+            }"
+            class="btn btn-success menuContent-add-item"
             v-if="numOfCategories > 0"
-            @click="goToAddItems()"
           >
             add items
-          </button>
-          <div class="location-info text-center mt-2">
-            <h1 class="restaurant-title">{{ localName }}</h1>
-            <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
-          </div>
+          </router-link>
           <div class="displayMenu">
             <div
-              class="displayCategories"
+              class="displayCategories col-xs-12"
               v-for="(category, i) in listOfAllCategories"
               :key="i"
             >
-              <h1 class="title-category text-center">{{ category.name }}</h1>
-              <div class="container">
-                <div class="row">
-                  <div
-                    class="displayItems"
-                    v-for="(item, i) in listOfAllItems"
-                    v-show="category.id == item.catId"
-                    :key="i"
-                    :class="{
-                      'col-xs-12 col-x-6 col-md-4 col-lg-4 ':
-                        category.id == item.catId,
-                    }"
-                  >
-                    <div class="items-info text-center">
-                      <p class="nameItem">
-                        <span class="titleItems">name item :_</span>
-                        {{ item.name }}
-                      </p>
-                      <p class="ItemDes">
-                        {{ item.Description }}
-                      </p>
-                      <p>
-                        <span class="price text-end"
-                          >Price {{ item.Price }}</span
-                        >
-                        <span class="price text-start">
-                          Quantities {{ item.Quantities }}</span
-                        >
-                      </p>
-
-                      <router-link
-                        :to="{
-                          name: 'updateItem',
-                          params: {
-                            itemId: item.id,
-                            locationId: restaurantId,
-                          },
-                        }"
-                        class="btn-update btn btn-info float-start"
-                      >
-                        update</router-link
-                      >
-                      <router-link
-                        :to="{
-                          name: 'DeleteItem',
-                          params: {
-                            itemId: item.id,
-                            locationId: restaurantId,
-                          },
-                        }"
-                        class="btn-update btn btn-danger float-end"
-                      >
-                        delete</router-link
-                      >
-                    </div>
+              <div class="row">
+                <div
+                  class="titleName col-lg-6"
+                  @click="displayItems(category.id)"
+                >
+                  <h1 class="title-category">{{ category.name }}</h1>
+                </div>
+                <div class="groupBtn col-lg-6">
+                  <div class="row">
+                    <router-link
+                      :to="{
+                        name: 'UpdateCategories',
+                        params: {
+                          locationId: restaurantId,
+                          catId: category.id,
+                        },
+                      }"
+                      class="btn btn-secondary menuContent-update-item col-lg-6 w-auto m-auto text-center"
+                    >
+                      Update
+                    </router-link>
+                    <router-link
+                      :to="{
+                        name: 'DeleteCategories',
+                        params: {
+                          locationId: restaurantId,
+                          catId: category.id,
+                        },
+                      }"
+                      class="btn btn-danger menuContent-delete-item col-lg-6 w-auto m-auto text-center"
+                    >
+                      DELETE
+                    </router-link>
                   </div>
-                  <hr />
                 </div>
               </div>
             </div>
@@ -116,7 +111,6 @@ export default {
       "listOfAllCategories",
       "numOfCategories",
       "isUserLoggedInId",
-      "listOfAllItems",
     ]),
   },
   mounted() {
@@ -125,11 +119,6 @@ export default {
       id: this.isUserLoggedInId,
       location: this.restaurantId,
     });
-    this.displayLocations();
-    this.getUserItems({
-      userId: this.isUserLoggedInId,
-      locationId: this.restaurantId,
-    });
   },
   methods: {
     ...mapActions(["redirect"]),
@@ -137,24 +126,7 @@ export default {
       "isUserLogged",
       "displayCategories",
       "accessUserLocations",
-      "getUserItems",
     ]),
-    goToAddItems() {
-      this.$router.push({
-        name: "addItems",
-        params: {
-          locationId: this.restaurantId,
-        },
-      });
-    },
-    goToAddCategories() {
-      this.$router.push({
-        name: "ViewCategories",
-        params: {
-          locationId: this.restaurantId,
-        },
-      });
-    },
     async displayLocations() {
       let result = await axios.get(
         `http://localhost:3000/locations?userId=${this.isUserLoggedInId}&id=${this.restaurantId}`
@@ -166,19 +138,53 @@ export default {
         console.log("not run");
       }
     },
+    displayItems(catId) {
+      this.$router.push({
+        name: "ItemsCategory",
+        params: {
+          locationId: this.restaurantId,
+          catId: catId,
+        },
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
 .menuContent {
-  padding-top: 10%;
+  padding-top: 1%;
+  background-image: url("@/assets/homeImages/sandwich-with-ground-meat.jpg");
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  min-height: 535px;
 }
 .menuContent-add-item,
 .menuContent-add-categories {
+  display: block;
   width: auto;
+  margin: 0 15px 15px 15px;
 }
 .menuContent-add-item {
   margin-left: auto;
+}
+.displayMenu {
+  padding: 0px;
+}
+.displayCategories {
+  padding: 15px 10px;
+  border-top: 1px solid #ddd;
+  background-color: rgba(2, 2, 2, 0.6);
+  cursor: pointer;
+  color: #eee;
+  text-indent: 10px;
+  transition: all ease-in-out 0.7s;
+}
+.displayCategories:hover {
+  border-top: 1px solid black;
+  background-color: transparent;
+  color: #03c988;
+  text-indent: 20px;
 }
 </style>
