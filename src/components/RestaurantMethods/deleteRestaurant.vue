@@ -1,6 +1,6 @@
 <template>
-  <navigationComponent class="navbar" />
-  <div class="delete-restaurant">
+  <div class="delete-restaurant text-center">
+    <navigationComponent class="navbar" />
     <div class="card col-4 m-auto">
       <div class="card-body">
         <h4 class="card-name">
@@ -17,7 +17,7 @@
         <div class="group-button">
           <div class="row">
             <button
-              class="card-link btn btn-info d-block col-5 m-auto"
+              class="card-link btn btn-danger d-block col-5 m-auto"
               @click="deleteRestaurant(id)"
             >
               DELETE
@@ -150,18 +150,19 @@ export default {
 <style lang="scss" scoped>
 .delete-restaurant {
   padding: auto;
-  padding-top: 15%;
-  background-image: url("@/assets/homeImages/deleteImage.jpg");
-  background-origin: center center;
+  background-image: url("@/assets/homeImages/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall.jpg");
+  background-position: center center;
   background-size: cover;
   width: 100%;
   height: 649px;
   color: #fff;
-  color: #8b6a2a;
 }
 .card {
-  padding: 0 15px;
+  margin-top: 12% !important;
   background-color: #0000 !important;
-  border: 2px solid #8b6a2a;
+  width: 50%;
+}
+.card-link {
+  margin-top: 10% !important;
 }
 </style>

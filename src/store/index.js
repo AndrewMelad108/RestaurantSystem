@@ -8,8 +8,8 @@ const state = {
   listOfCategories: [],
   listOfLocations: [],
   ThisLocation: [],
-  listOfItems: [],
   listOfAllItems: [],
+  ThisItem: [],
 };
 const getters = {
   isUserLoggedIn(state) {
@@ -18,11 +18,13 @@ const getters = {
 };
 const mutations = {
   redirect(state, payload) {
+    //redirect bettween pages
     //function redirect from pages
     //payload عشان تكون مفعله لكله
     router.push({ name: payload });
   },
   isUserLogged(state) {
+    //check user in login or not
     // check function in user login or not
     let user = localStorage.getItem("user-info");
     if (user) {
@@ -34,6 +36,7 @@ const mutations = {
     }
   },
   async displayCategories(state, payload) {
+    //all categories
     //display all categories in location
     let categories = await axios.get(
       `   http://localhost:3000/categories?userId=${payload.id}&locationId=${payload.location}`
@@ -46,6 +49,7 @@ const mutations = {
     }
   },
   async canAccessUserThisLocations(state, payload) {
+    //all locations
     //access all location by special user
     let locations = await axios.get(
       `   http://localhost:3000/locations?userId=${payload.userId}`
@@ -63,6 +67,7 @@ const mutations = {
     }
   },
   async accessUserLocation(state, payload) {
+    // access user of special location
     //access location by special user
     let location = await axios.get(
       `http://localhost:3000/locations?userId=${payload.userId}&id=${payload.locationId}`
@@ -80,6 +85,7 @@ const mutations = {
     }
   },
   async canAccessUserThisCategory(state, payload) {
+    //access user of special category
     //access categories by special user
     let categories = await axios.get(
       `http://localhost:3000/categories?userId=${payload.userId}&id=${payload.locationId}&id=${payload.id}`
@@ -96,7 +102,8 @@ const mutations = {
       console.log(" home");
     }
   },
-  async canAccessUserThisItems(state, payload) {
+  async getAllItemOfCategory(state, payload) {
+    //get all items
     //access items by special user
     let items = await axios.get(
       `http://localhost:3000/items?userId=${payload.userId}&locationId=${payload.locationId}&catId=${payload.catId}`
@@ -110,6 +117,24 @@ const mutations = {
       }
     } else {
       alert("show  items");
+    }
+  },
+  async canAccessUserThisItem(state, payload) {
+    //access user of special item
+    //access item by special user
+    let categories = await axios.get(
+      `http://localhost:3000/items?userId=${payload.userId}&locationId=${payload.locationId}&id=${payload.id}`
+    );
+    if (categories.status == 200) {
+      state.ThisItem = categories.data;
+      let itemLength = state.ThisItem.length;
+      console.log(itemLength);
+      if (itemLength == 0) {
+        //not empty
+        this.commit("redirect", payload.redirect);
+      }
+    } else {
+      console.log(" home");
     }
   },
 };

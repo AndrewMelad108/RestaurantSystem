@@ -9,7 +9,7 @@
         <div class="group-button">
           <div class="row">
             <button
-              class="card-link btn btn-info d-block col-5 m-auto"
+              class="card-link btn btn-danger d-block col-5 m-auto"
               @click="DeleteAllLocations()"
             >
               DELETEALL
@@ -124,12 +124,11 @@ export default {
 .DeleteAllLocations {
   padding: auto;
   padding-top: 15%;
-  background-image: url("@/assets/homeImages/deleteImage.jpg");
+  background-image: url("@/assets/homeImages/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall.jpg");
   background-origin: center center;
   background-size: cover;
   width: 100%;
   height: 649px;
-  color: #fff;
   color: #8b6a2a;
 }
 .card {

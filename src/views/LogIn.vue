@@ -94,14 +94,7 @@ export default {
   computed: {
     ...mapState(["isUserLoggedIn", "isUserLoggedInId"]),
   },
-  mounted() {
-    this.isUserLogged();
-    if (this.isUserLoggedIn) {
-      console.log(this.isUserLoggedIn);
-    } else {
-      this.redirect("signUp");
-    }
-  },
+
   methods: {
     ...mapActions(["redirect"]),
     ...mapMutations(["isUserLogged"]),

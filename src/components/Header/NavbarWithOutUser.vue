@@ -19,54 +19,25 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <li class="nav-item">
-            <router-link :to="{ name: 'Home' }" class="nav-item">
-              Home
+            <router-link :to="{ name: 'signUp' }" class="nav-item">
+              RESIGNER
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'RestaurantsComp' }" class="nav-item">
-              Locations
+            <router-link :to="{ name: 'Login' }" class="nav-item">
+              LOGIN
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'About' }" class="nav-item">
-              About Us
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'Profile' }" class="nav-item">
-              Profile
-            </router-link>
-          </li>
-          <li class="nav-item" @click="logout()">logout</li>
         </div>
       </div>
     </nav>
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
 export default {
-  name: "navigationComponent",
+  name: "navComp",
   data: function () {
-    return {
-      userName: "",
-    };
-  },
-
-  mounted() {
-    let user = JSON.parse(localStorage.getItem("user-info")).Name;
-    this.userName = user;
-  },
-  methods: {
-    ...mapActions(["redirect"]),
-    logout() {
-      localStorage.clear();
-      this.redirect("signUp");
-    },
-    homePage() {
-      this.redirect("Home");
-    },
+    return {};
   },
 };
 </script>
@@ -83,7 +54,7 @@ export default {
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 #navbarNavAltMarkup {
-  margin-left: 40% !important ;
+  margin-left: 60% !important ;
 }
 .navbar-content .navbar-brand {
   transition: 0.5s all ease-in-out;
@@ -103,7 +74,7 @@ export default {
   text-decoration: none;
   text-align: center;
   display: inline-block !important;
-  width: 120px !important;
+  width: 150px !important;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;

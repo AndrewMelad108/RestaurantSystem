@@ -1,6 +1,6 @@
 <template>
-  <navigationComponent class="navbar" />
-  <div class="DeleteAllLocations">
+  <div class="DeleteAllCategories">
+    <navigationComponent class="navbar" />
     <div class="card col-4 m-auto text-center">
       <div class="card-body">
         <p class="lead text-center text-danger message">
@@ -112,18 +112,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.DeleteAllLocations {
-  padding: auto;
-  padding-top: 15%;
+.DeleteAllCategories {
   background-image: url("@/assets/homeImages/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall.jpg");
-  background-origin: center center;
-  background-size: cover;
   width: 100%;
-  height: 649px;
-  color: #fff;
-  color: #8b6a2a;
+  background-size: cover;
+  background-position: center center;
+  min-height: 649;
+  padding: auto;
+  min-height: 649px;
 }
 .card {
+  margin-top: 15% !important;
   padding: 0 15px;
   background-color: #0000 !important;
   border: 2px solid #8b6a2a;

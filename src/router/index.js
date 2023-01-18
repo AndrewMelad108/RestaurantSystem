@@ -5,6 +5,7 @@ import LogInPage from "../views/LogIn.vue";
 import profilePage from "../views/Profile/Profile.vue";
 import updateProfile from "../components/Profile/UpdateProfile.vue";
 import homePage from "../views/Home.vue";
+import About from "../components/homeComponent/addSectionRestaurantStyle.vue";
 import RestaurantsComp from "../components/RestaurantMethods/Restaurants.vue";
 import addRestaurantLocation from "../components/RestaurantMethods/addRestaurantLocation.vue";
 import updateRestaurant from "../components/RestaurantMethods/updateRestaurant.vue";
@@ -38,6 +39,13 @@ const routes = [
     meta: {
       requireAuth: true,
     },
+    children: [
+      {
+        path: "/",
+        name: "About",
+        component: About,
+      },
+    ],
   },
   {
     path: "/RestaurantsComp",

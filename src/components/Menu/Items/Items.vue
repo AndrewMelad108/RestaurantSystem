@@ -105,7 +105,7 @@ export default {
   },
   async mounted() {
     this.isUserLogged();
-    this.canAccessUserThisItems({
+    this.getAllItemOfCategory({
       userId: this.isUserLoggedInId,
       locationId: this.locationId,
       catId: this.catId,
@@ -123,7 +123,7 @@ export default {
     ...mapMutations([
       "isUserLogged",
       "canAccessUserThisItems",
-      "accessUserThisCategories",
+      "getAllItemOfCategory",
     ]),
   },
 };

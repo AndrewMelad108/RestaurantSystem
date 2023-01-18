@@ -1,13 +1,12 @@
 <template>
-  <div class="DeleteCategories">
+  <div class="DeleteItem">
     <navigationComponent class="navbar" />
-    <div class="DeleteCategories-content">
+    <div class="DeleteItem-content">
       <div class="container">
         <div class="row">
           <div class="location-info text-center mt-2">
-            <h1 class="restaurant-title">{{ localName }}</h1>
-            <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
-            <p class="lead text-danger m-auto">
+            <h1 class="restaurant-title text-light">{{ localName }}</h1>
+            <p class="lead text-danger m-auto des">
               Do you want to delete item {{ nameItem }}
             </p>
             <div class="group-btn">
@@ -140,12 +139,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.DeleteCategories-content {
-  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
+.DeleteItem {
+  background-image: url("@/assets/homeImages/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall.jpg");
   width: 100%;
   background-size: cover;
   background-position: center center;
   min-height: 648px;
+}
+.des {
+  font-size: 35px;
 }
 .DeleteItem-back,
 .delete-btn {

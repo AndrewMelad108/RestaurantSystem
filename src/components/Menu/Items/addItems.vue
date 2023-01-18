@@ -247,8 +247,6 @@ export default {
             showConfirmButton: false,
             timer: 1000,
           });
-          alert("name exist");
-          this.name = "";
         } else {
           console.log("  valid ");
           let result = await axios.post(`http://localhost:3000/items`, {

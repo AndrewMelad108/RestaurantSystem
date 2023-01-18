@@ -1,6 +1,7 @@
 <template>
   <div class="homePage">
-    <navigationComponent />
+    <navigationComponent v-if="show" />
+    <navComp v-else />
     <introPage class="introPage" />
     <div class="container">
       <div class="row">
@@ -10,25 +11,35 @@
       </div>
     </div>
     <descriptionSite />
+    <ContactUs />
   </div>
+  <FooterComp />
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import navigationComponent from "@/components/Header/navigation.vue";
+import navComp from "@/components/Header/NavbarWithOutUser.vue";
 import introPage from "@/components/homeComponent/introPage.vue";
 import addRestaurantStyle from "@/components/homeComponent/addSectionRestaurantStyle.vue";
 import descriptionSite from "@/components/homeComponent/descriptionSite.vue";
+import ContactUs from "@/components/homeComponent/ContactUs.vue";
+import FooterComp from "@/components/homeComponent/Footer.vue";
 export default {
   name: "homePage",
   data: function () {
-    return {};
+    return {
+      show: null,
+    };
   },
   components: {
     navigationComponent,
     introPage,
     addRestaurantStyle,
     descriptionSite,
+    ContactUs,
+    FooterComp,
+    navComp,
   },
   computed: {
     ...mapState(["isUserLoggedIn", "isUserLoggedInId"]),
@@ -36,9 +47,11 @@ export default {
   mounted() {
     let user = localStorage.getItem("user-info");
     if (user) {
-      console.log(this.isUserLoggedIn);
+      this.show = true;
+      console.log(this.show);
     } else {
-      this.redirect("signUp");
+      this.show = false;
+      console.log(this.show);
     }
   },
   methods: {
@@ -48,11 +61,9 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital@1&display=swap");
 .homePage {
   margin-top: 0 !important ;
-  height: 10000px;
-  font-family: "Crimson Text", serif;
+  height: auto;
 }
 .navbar {
   color: #dc0000 !important;

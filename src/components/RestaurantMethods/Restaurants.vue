@@ -125,7 +125,7 @@ export default {
   background-size: cover;
   background-origin: center center;
   width: 100%;
-  min-height: 534px;
+  min-height: 594px;
   color: black !important;
 }
 .Restaurants-title {

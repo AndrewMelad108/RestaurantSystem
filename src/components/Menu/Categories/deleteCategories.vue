@@ -4,9 +4,8 @@
     <div class="DeleteCategories-content container">
       <div class="row">
         <div class="location-info text-center mt-2">
-          <h1 class="restaurant-title">{{ localName }}</h1>
-          <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
-          <p class="lead text-danger m-auto">
+          <h1 class="restaurant-title text-light">{{ localName }}</h1>
+          <p class="lead text-danger m-auto des">
             Do you want to delete category {{ nameCategory }}
           </p>
           <div class="group-btn">
@@ -41,7 +40,6 @@ export default {
   data() {
     return {
       locationId: this.$route.params.locationId,
-      addressName: "",
       localName: "",
       name: "",
       catId: this.$route.params.catId,
@@ -152,11 +150,14 @@ export default {
 
 <style lang="scss" scoped>
 .DeleteCategories {
-  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
+  background-image: url("@/assets/homeImages/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall.jpg");
   width: 100%;
   background-size: cover;
   background-position: center center;
   min-height: 648px;
+}
+.des {
+  font-size: 35px;
 }
 .delete,
 .DeleteCategories-back-menu {

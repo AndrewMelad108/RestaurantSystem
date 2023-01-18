@@ -139,14 +139,13 @@ import navigationComponent from "@/components/Header/navigation.vue";
 import { mapActions, mapMutations, mapState } from "vuex"; // component vuex
 import useValidate from "@vuelidate/core"; //import from page
 import { required, minLength, maxLength, between } from "@vuelidate/validators"; //option validate
-
+import Swal from "sweetalert2";
 export default {
   name: "AddCategories",
   data() {
     return {
       restaurantId: this.$route.params.locationId,
       itemId: this.$route.params.itemId,
-      addressName: "",
       localName: "",
       v$: useValidate(),
       name: "",
@@ -155,6 +154,7 @@ export default {
       Description: "",
       PickedCategory: "",
       listUserCategories: [],
+      listUserItems: [], //get all categories
     };
   },
   validations() {
@@ -183,13 +183,7 @@ export default {
     };
   },
   computed: {
-    ...mapState([
-      "isUserLoggedIn",
-      "listOfCategories",
-      "numOfCategories",
-      "isUserLoggedInId",
-      "listOfAllCategories",
-    ]),
+    ...mapState(["isUserLoggedIn", "isUserLoggedInId", "listOfAllCategories"]),
   },
   components: {
     navigationComponent,
@@ -197,12 +191,13 @@ export default {
   mounted() {
     this.isUserLogged();
     this.displayLocations();
-    this.displayUserItems();
     this.displayUserCategories();
-    this.canAccessUserThisItems({
+    this.displayItems();
+    this.displayAllItems();
+    this.canAccessUserThisItem({
       userId: this.isUserLoggedInId,
       locationId: this.restaurantId,
-      itemId: this.itemId,
+      id: this.itemId,
       redirect: "Home",
     });
   },
@@ -211,25 +206,8 @@ export default {
     ...mapMutations([
       "isUserLogged",
       "displayCategories",
-      "accessUserLocations",
-      "canAccessUserThisItems",
+      "canAccessUserThisItem",
     ]),
-    BackCategories() {
-      this.$router.push({
-        name: "ViewCategories",
-        params: {
-          locationId: this.restaurantId,
-        },
-      });
-    },
-    BackMenu() {
-      this.$router.push({
-        name: "MenuComp",
-        params: {
-          restaurantId: this.restaurantId,
-        },
-      });
-    },
     async displayLocations() {
       let result = await axios.get(
         `http://localhost:3000/locations?userId=${this.isUserLoggedInId}&id=${this.restaurantId}`
@@ -237,6 +215,32 @@ export default {
       if (result.status == 200) {
         this.localName = result.data[0].nameRestaurant;
         this.addressName = result.data[0].addressRestaurant;
+      } else {
+        console.log("not run");
+      }
+    },
+    async displayItems() {
+      let result = await axios.get(
+        `http://localhost:3000/items?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}&id=${this.itemId}`
+      );
+      if (result.status == 200) {
+        for (let i = 0; i < result.data.length; i++) {
+          this.name = result.data[i].name;
+          this.Quantities = result.data[i].Quantities;
+          this.Price = result.data[i].Price;
+          this.PickedCategory = result.data[i].catId;
+          this.Description = result.data[i].Description;
+        }
+      } else {
+        console.log("not run");
+      }
+    },
+    async displayAllItems() {
+      let result = await axios.get(
+        `http://localhost:3000/items?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}`
+      );
+      if (result.status == 200) {
+        this.listUserItems = result.data;
       } else {
         console.log("not run");
       }
@@ -251,57 +255,67 @@ export default {
         console.log("not displayUserCategories");
       }
     },
-    async displayUserItems() {
-      let result = await axios.get(
-        `http://localhost:3000/items?userId=${this.isUserLoggedInId}&locationId=${this.restaurantId}&id=${this.itemId}`
-      );
-      if (result.status == 200) {
-        this.name = result.data[0].name;
-        this.Quantities = result.data[0].Quantities;
-        this.Price = result.data[0].Price;
-        this.Description = result.data[0].Description;
-        this.PickedCategory = result.data[0].catId;
-      } else {
-        console.log("not displayUserCategories");
-      }
-    },
     async updateItems() {
       console.log(this.listUserItems);
-      // let resultFliterName = this.listUserItems.filter((v) => {
-      //   return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
-      // });
-      // console.log(resultFliterName);
+      let resultFliterName = this.listUserItems.filter((v) => {
+        return v.name.toLocaleLowerCase() == this.name.toLocaleLowerCase();
+      });
+      console.log(resultFliterName);
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
-        // if (resultFliterName.length > 0) {
-        //   alert("name exist");
-        //   this.name = "";
-        // } else {
-        console.log("  valid ");
-        let result = await axios.put(
-          `http://localhost:3000/items/${this.itemId}`,
-          {
-            name: this.name,
-            Quantities: this.Quantities,
-            Price: this.Price,
-            Description: this.Description,
-            catId: this.PickedCategory,
-            userId: this.isUserLoggedInId,
-            locationId: this.restaurantId,
-            id: this.itemId,
-          }
-        );
-        if (result.status == 200) {
-          this.$router.push({
-            name: "MenuComp",
-            params: {
-              restaurantId: this.restaurantId,
-            },
+        if (resultFliterName.length > 0) {
+          Swal.fire({
+            icon: "success",
+            title: "Name Exist",
+            showConfirmButton: false,
+            timer: 1000,
           });
+          setTimeout(() => {
+            this.$router.push({
+              name: "MenuComp",
+              params: {
+                restaurantId: this.restaurantId,
+              },
+            });
+          }, 2000);
+        } else {
+          let result = await axios.put(
+            `http://localhost:3000/items/${this.itemId}`,
+            {
+              name: this.name,
+              Quantities: this.Quantities,
+              Price: this.Price,
+              Description: this.Description,
+              catId: this.PickedCategory,
+              userId: this.isUserLoggedInId,
+              locationId: this.restaurantId,
+              id: this.itemId,
+            }
+          );
+          if (result.status == 200) {
+            Swal.fire({
+              icon: "success",
+              title: "Update succeeded",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            setTimeout(() => {
+              this.$router.push({
+                name: "MenuComp",
+                params: {
+                  restaurantId: this.restaurantId,
+                },
+              });
+            }, 2000);
+          }
         }
-        // }
       } else {
-        console.log(" not valid ");
+        Swal.fire({
+          icon: "warning",
+          title: "The Fields Are Empty",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
   },

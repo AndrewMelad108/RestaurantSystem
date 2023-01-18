@@ -166,7 +166,6 @@ export default {
             });
           }, 2000);
         } else {
-          console.log("  valid ");
           let result = await axios.put(
             `http://localhost:3000/categories/${this.catId}`,
             {
@@ -213,7 +212,7 @@ export default {
   width: 100%;
   background-size: cover;
   background-position: center center;
-  min-height: 593px;
+  min-height: 594px;
 }
 .containerBtn,
 .Errors {
