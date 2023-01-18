@@ -1,20 +1,17 @@
 <template>
   <div class="DeleteCategories">
     <navigationComponent class="navbar" />
-    <div class="DeleteCategories-content container">
-      <div class="row">
-        <div class="location-info text-center mt-2">
-          <h1 class="restaurant-title">{{ localName }}</h1>
-          <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
-          <p class="lead text-danger m-auto">
-            Do you want to delete item {{ nameItem }}
-          </p>
-          <div class="group-btn">
-            <div class="row">
-              <button
-                class="btn btn-danger delete col-6 w-auto d-block ml-auto"
-                @click="DeleteItem()"
-              >
+    <div class="DeleteCategories-content">
+      <div class="container">
+        <div class="row">
+          <div class="location-info text-center mt-2">
+            <h1 class="restaurant-title">{{ localName }}</h1>
+            <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
+            <p class="lead text-danger m-auto">
+              Do you want to delete item {{ nameItem }}
+            </p>
+            <div class="group-btn">
+              <button class="btn btn-danger delete-btn" @click="DeleteItem()">
                 delete item
               </button>
               <router-link
@@ -24,7 +21,7 @@
                     restaurantId: locationId,
                   },
                 }"
-                class="btn btn-info DeleteCategories-back-categories col-6"
+                class="btn btn-info DeleteItem-back"
               >
                 Back menu
               </router-link>
@@ -38,6 +35,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 import navigationComponent from "@/components/Header/navigation.vue";
 import { mapActions, mapMutations, mapState } from "vuex"; // component vuex
 export default {
@@ -95,8 +93,10 @@ export default {
         `http://localhost:3000/locations?userId=${this.isUserLoggedInId}&id=${this.locationId}`
       );
       if (result.status == 200) {
-        this.localName = result.data[0].nameRestaurant;
-        this.addressName = result.data[0].addressRestaurant;
+        for (let i = 0; i < result.data.length; i++) {
+          this.localName = result.data[i].nameRestaurant;
+          this.addressName = result.data[i].addressRestaurant;
+        }
       } else {
         console.log("not run");
       }
@@ -117,12 +117,20 @@ export default {
       );
 
       if (result.status == 200) {
-        this.$router.push({
-          name: "MenuComp",
-          params: {
-            restaurantId: this.locationId,
-          },
+        Swal.fire({
+          icon: "success",
+          title: "Delete Succeeded",
+          showConfirmButton: false,
+          timer: 1500,
         });
+        setTimeout(() => {
+          this.$router.push({
+            name: "MenuComp",
+            params: {
+              restaurantId: this.locationId,
+            },
+          });
+        }, 2000);
       } else {
         alert("error");
       }
@@ -133,13 +141,22 @@ export default {
 
 <style lang="scss" scoped>
 .DeleteCategories-content {
-  padding-top: 10%;
+  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  min-height: 648px;
 }
-.DeleteCategories-back-categories,
-.DeleteCategories-back-menu {
+.DeleteItem-back,
+.delete-btn {
   width: auto;
+  margin: auto;
+  margin-top: 35px;
 }
-.DeleteCategories-back-menu {
-  margin-left: auto;
+.delete-btn {
+  margin-left: 10px;
+}
+.DeleteItem-back {
+  margin-left: 20px;
 }
 </style>

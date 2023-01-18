@@ -1,47 +1,53 @@
 <template>
   <div class="AddCategories">
     <navigationComponent class="navbar" />
-    <div class="AddCategories-content container">
-      <div class="row">
-        <button
-          class="btn btn-info AddCategories-back-categories col-6"
-          @click="BackCategories()"
-        >
-          Back categories
-        </button>
-        <button
-          class="btn btn-info AddCategories-back-menu col-6"
-          @click="BackMenu()"
-        >
-          Back menu
-        </button>
-        <div class="location-info text-center mt-2">
-          <h1 class="restaurant-title">{{ localName }}</h1>
-          <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
-        </div>
-        <div class="addCategories-form m-auto w-auto">
-          <form @click.prevent>
-            <label class="label-title">Name Categories</label>
-            <input
-              class="form-control btn-input"
-              type="text"
-              placeholder="Enter Your Name Categories"
-              v-model="name"
-            />
-            <span
-              class="alert alert-success Errors"
-              role="alert"
-              v-if="v$.name.$error"
-            >
-              {{ v$.name.$errors[0].$message }}
-            </span>
-            <button
-              class="btn btn-info text-center d-block m-auto"
-              @click="addCategories()"
-            >
-              add Categories
-            </button>
-          </form>
+    <div class="AddCategories-content">
+      <div class="container">
+        <div class="row">
+          <div class="location-info text-center mt-2">
+            <h1 class="restaurant-title">{{ localName }}</h1>
+          </div>
+          <div class="addCategories-form">
+            <form @click.prevent>
+              <div class="form-floating containerBtn">
+                <input
+                  type="text"
+                  class="form-control btn-input"
+                  id="floatingName"
+                  placeholder="Enter Your Name Category"
+                  v-model.trim="name"
+                />
+                <label for="floatingName" class="text-muted">
+                  Enter Your Name Category
+                </label>
+              </div>
+              <span
+                class="alert alert-danger Errors"
+                role="alert"
+                v-if="v$.name.$error"
+              >
+                {{ v$.name.$errors[0].$message }}
+              </span>
+
+              <button
+                class="btn btn-success text-center addCategories"
+                @click="addCategories()"
+              >
+                add Categories
+              </button>
+              <router-link
+                :to="{
+                  name: 'MenuComp',
+                  params: {
+                    restaurantId: restaurantId,
+                  },
+                }"
+                class="btn btn-secondary text-center addCategories-back-menu"
+              >
+                Back menu
+              </router-link>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -50,6 +56,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 import navigationComponent from "@/components/Header/navigation.vue";
 import { mapActions, mapMutations, mapState } from "vuex"; // component vuex
 import useValidate from "@vuelidate/core"; //import from page
@@ -89,7 +96,7 @@ export default {
   },
   mounted() {
     this.isUserLogged();
-    this.accessUserLocations({
+    this.accessUserLocation({
       //access user locations
       userId: this.isUserLoggedInId,
       locationId: this.restaurantId,
@@ -104,7 +111,7 @@ export default {
     ...mapMutations([
       "isUserLogged",
       "displayCategories",
-      "accessUserLocations",
+      "accessUserLocation",
     ]),
     BackCategories() {
       this.$router.push({
@@ -114,14 +121,7 @@ export default {
         },
       });
     },
-    BackMenu() {
-      this.$router.push({
-        name: "MenuComp",
-        params: {
-          restaurantId: this.restaurantId,
-        },
-      });
-    },
+
     async displayLocations() {
       let result = await axios.get(
         `http://localhost:3000/locations?userId=${this.isUserLoggedInId}&id=${this.restaurantId}`
@@ -153,8 +153,20 @@ export default {
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
         if (resultFliterName.length > 0) {
-          alert("name exist");
-          this.name = "";
+          Swal.fire({
+            icon: "success",
+            title: "Name Exist",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          setTimeout(() => {
+            this.$router.push({
+              name: "MenuComp",
+              params: {
+                restaurantId: this.restaurantId,
+              },
+            });
+          }, 2000);
         } else {
           console.log("  valid ");
           let result = await axios.post(`http://localhost:3000/categories`, {
@@ -163,11 +175,29 @@ export default {
             locationId: +this.restaurantId,
           });
           if (result.status == 201) {
-            this.BackCategories();
+            Swal.fire({
+              icon: "success",
+              title: "Add succeeded",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            setTimeout(() => {
+              this.$router.push({
+                name: "MenuComp",
+                params: {
+                  restaurantId: this.restaurantId,
+                },
+              });
+            }, 2000);
           }
         }
       } else {
-        console.log(" not valid ");
+        Swal.fire({
+          icon: "warning",
+          title: "The Fields Are Empty",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
   },
@@ -176,13 +206,42 @@ export default {
 
 <style lang="scss" scoped>
 .AddCategories-content {
-  padding-top: 10%;
+  padding-top: 2%;
+  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  min-height: 593px;
 }
-.AddCategories-back-categories,
-.AddCategories-back-menu {
+.containerBtn,
+.Errors {
+  display: block;
+  width: 70%;
+  margin: auto;
+}
+.Errors {
+  margin-bottom: 10px;
+}
+.btn-input {
+  margin-bottom: 20px;
+  background: transparent;
+  text-indent: 10px !important;
+}
+.btn-input:focus,
+.btn-input:active {
+  background: transparent;
+}
+.addCategories,
+.addCategories-back-menu {
   width: auto;
+  display: inline-block !important;
+  padding-left: 20px;
 }
-.AddCategories-back-menu {
-  margin-left: auto;
+.addCategories {
+  margin-left: 35%;
+}
+
+.addCategories-back-menu {
+  margin-left: 5%;
 }
 </style>

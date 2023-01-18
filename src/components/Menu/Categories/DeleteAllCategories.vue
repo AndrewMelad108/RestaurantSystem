@@ -9,7 +9,7 @@
         <div class="group-button">
           <div class="row">
             <button
-              class="card-link btn btn-info d-block col-5 m-auto"
+              class="card-link btn btn-danger d-block col-5 m-auto"
               @click="DeleteAllCategories()"
             >
               DELETEALL
@@ -34,7 +34,7 @@
 
 <script>
 import axios from "axios";
-import { mapActions } from "vuex"; // component vuex
+import { mapActions, mapMutations } from "vuex"; // component vuex
 import navigationComponent from "@/components/Header/navigation.vue";
 export default {
   name: "DeleteAllCategories",
@@ -69,10 +69,16 @@ export default {
         this.listAllItems.push(allIems.data[i].id);
       }
       console.table(this.listAllItems);
+      this.accessUserLocation({
+        userId: this.userId,
+        locationId: this.locationId,
+        redirect: "Home",
+      });
     }
   },
   methods: {
     ...mapActions(["redirect"]),
+    ...mapMutations(["isUserLogged", "accessUserLocation"]),
     async DeleteAllCategories() {
       let allResultCategories = [];
       for (let i = 0; i < this.listAllCategories.length; i++) {
@@ -109,7 +115,7 @@ export default {
 .DeleteAllLocations {
   padding: auto;
   padding-top: 15%;
-  background-image: url("@/assets/homeImages/deleteImage.jpg");
+  background-image: url("@/assets/homeImages/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall.jpg");
   background-origin: center center;
   background-size: cover;
   width: 100%;

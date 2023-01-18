@@ -34,7 +34,7 @@
             <div class="row gx-15 gy-15">
               <div
                 class="card col-lg-3 col-sm-6 text-center"
-                v-for="item in listOfItems"
+                v-for="item in listOfAllItems"
                 :key="item.index"
               >
                 <div class="card-body">
@@ -100,7 +100,7 @@ export default {
       "isUserLoggedIn",
       "numOfCategories",
       "isUserLoggedInId",
-      "listOfItems",
+      "listOfAllItems",
     ]),
   },
   async mounted() {

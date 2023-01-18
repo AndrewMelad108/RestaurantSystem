@@ -1,126 +1,132 @@
 <template>
   <div class="UpdateItems">
     <navigationComponent class="navbar" />
-    <div class="UpdateItems-content container">
-      <div class="row">
-        <router-link
-          :to="{
-            name: 'MenuComp',
-            params: {
-              restaurantId: restaurantId,
-            },
-          }"
-          class="btn btn-info UpdateItems-back-menu col-6"
-        >
-          Back Menu
-        </router-link>
+    <div class="UpdateItems-content">
+      <div class="container">
+        <div class="row">
+          <div class="location-info text-center mt-2">
+            <h1 class="restaurant-title">{{ localName }}</h1>
+          </div>
+          <div class="UpdateItems-form">
+            <form @click.prevent>
+              <div class="form-floating containerBtn">
+                <!--name itmes-->
 
-        <div class="location-info text-center mt-2">
-          <h1 class="restaurant-title">{{ localName }}</h1>
-          <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
-        </div>
-        <div class="UpdateItems-form m-auto w-auto">
-          <form @click.prevent>
-            <div class="form-floating">
-              <!--name itmes-->
-
-              <input
-                type="text"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Enter Name Items"
-                v-model.trim="name"
-              />
-              <label for="floatingPassword">Enter Name Items</label>
-            </div>
-            <!--validate name items-->
-            <span
-              class="alert alert-success Errors"
-              role="alert"
-              v-if="v$.name.$error"
-              ><!--validate name items-->
-              {{ v$.name.$errors[0].$message }}
-            </span>
-            <div class="form-floating">
-              <!---->
-              <input
-                type="number"
-                class="form-control"
-                id="Quantities"
-                placeholder="Enter Name Quantities"
-                v-model.trim="Quantities"
-              />
-              <label for="Quantities">Enter Name Quantities</label>
-            </div>
-            <span
-              class="alert alert-success Errors"
-              role="alert"
-              v-if="v$.Quantities.$error"
-            >
-              {{ v$.Quantities.$errors[0].$message }}
-            </span>
-            <div class="form-floating">
-              <!---->
-              <input
-                type="number"
-                class="form-control"
-                id="Price"
-                placeholder="Enter Price Items"
-                v-model.trim="Price"
-              />
-              <label for="Quantities">Enter Price Items</label>
-            </div>
-            <span
-              class="alert alert-success Errors"
-              role="alert"
-              v-if="v$.Price.$error"
-            >
-              {{ v$.Price.$errors[0].$message }}
-            </span>
-            <div class="form-floating">
-              <select
-                class="form-select"
-                id="floatingSelect"
-                aria-label="Floating label select example"
-                v-model="PickedCategory"
+                <input
+                  type="text"
+                  class="form-control btn-input"
+                  id="floatingPassword"
+                  placeholder="Enter Name Items"
+                  v-model.trim="name"
+                />
+                <label for="floatingPassword">Enter Name Items</label>
+              </div>
+              <!--validate name items-->
+              <span
+                class="alert alert-danger Errors"
+                role="alert"
+                v-if="v$.name.$error"
+                ><!--validate name items-->
+                {{ v$.name.$errors[0].$message }}
+              </span>
+              <div class="form-floating containerBtn">
+                <!---->
+                <input
+                  type="number"
+                  class="form-control btn-input"
+                  id="Quantities"
+                  placeholder="Enter Name Quantities"
+                  v-model.trim="Quantities"
+                />
+                <label for="Quantities">Enter Name Quantities</label>
+              </div>
+              <span
+                class="alert alert-danger Errors"
+                role="alert"
+                v-if="v$.Quantities.$error"
               >
-                <option
-                  v-for="category in listUserCategories"
-                  :key="category.index"
-                  :value="category.id"
+                {{ v$.Quantities.$errors[0].$message }}
+              </span>
+              <div class="form-floating containerBtn">
+                <!---->
+                <input
+                  type="number"
+                  class="form-control btn-input"
+                  id="Price"
+                  placeholder="Enter Price Items"
+                  v-model.trim="Price"
+                />
+                <label for="Quantities">Enter Price Items</label>
+              </div>
+              <span
+                class="alert alert-danger Errors"
+                role="alert"
+                v-if="v$.Price.$error"
+              >
+                {{ v$.Price.$errors[0].$message }}
+              </span>
+              <div class="form-floating containerBtn">
+                <select
+                  class="form-select btn-input"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                  v-model="PickedCategory"
                 >
-                  {{ category.name }}
-                </option>
-              </select>
+                  <option
+                    v-for="category in listOfAllCategories"
+                    :key="category.index"
+                    :value="category.id"
+                  >
+                    {{ category.name }}
+                  </option>
+                </select>
 
-              <label for="floatingSelect">Open Categories menu</label>
-            </div>
-
-            <div class="form-floating">
-              <textarea
-                class="form-control"
-                placeholder="Enter Description About Items"
-                id="floatingTextarea"
-                v-model.trim="Description"
-              ></textarea>
-              <label for="floatingTextarea"
-                >Enter Description About Items</label
+                <label for="floatingSelect">Open Categories menu</label>
+              </div>
+              <span
+                class="alert alert-danger Errors"
+                role="alert"
+                v-if="v$.PickedCategory.$error"
               >
-            </div>
-            <span
-              class="alert alert-success Errors"
-              role="alert"
-              v-if="v$.Description.$error"
-            >
-              {{ v$.Description.$errors[0].$message }}
-            </span>
-            <button
-              class="btn btn-info text-center d-block m-auto"
-              @click="updateItems()"
-            >
-              updateItems
-            </button>
-          </form>
+                {{ v$.PickedCategory.$errors[0].$message }}
+              </span>
+              <div class="form-floating containerBtn">
+                <textarea
+                  class="form-control btn-input"
+                  placeholder="Enter Description About Items"
+                  id="floatingTextarea"
+                  v-model.trim="Description"
+                ></textarea>
+                <label for="floatingTextarea"
+                  >Enter Description About Items</label
+                >
+              </div>
+              <span
+                class="alert alert-danger Errors"
+                role="alert"
+                v-if="v$.Description.$error"
+              >
+                {{ v$.Description.$errors[0].$message }}
+              </span>
+              <button
+                class="btn btn-success text-center UpdateItems-btn"
+                @click="updateItems()"
+              >
+                updateItems
+              </button>
+              <router-link
+                :to="{
+                  name: 'MenuComp',
+                  params: {
+                    restaurantId: restaurantId,
+                  },
+                }"
+                class="btn btn-dark text-center UpdateItems-back-menu"
+              >
+                Back Menu
+              </router-link>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -182,6 +188,7 @@ export default {
       "listOfCategories",
       "numOfCategories",
       "isUserLoggedInId",
+      "listOfAllCategories",
     ]),
   },
   components: {
@@ -189,16 +196,15 @@ export default {
   },
   mounted() {
     this.isUserLogged();
-    this.accessUserLocations({
-      //access user locations
-      userId: this.isUserLoggedInId,
-      locationId: this.restaurantId,
-      redirect: "Home",
-    });
-    console.log(this.PickedCategory);
     this.displayLocations();
     this.displayUserItems();
     this.displayUserCategories();
+    this.canAccessUserThisItems({
+      userId: this.isUserLoggedInId,
+      locationId: this.restaurantId,
+      itemId: this.itemId,
+      redirect: "Home",
+    });
   },
   methods: {
     ...mapActions(["redirect"]),
@@ -206,7 +212,7 @@ export default {
       "isUserLogged",
       "displayCategories",
       "accessUserLocations",
-      "accessUserThisItems",
+      "canAccessUserThisItems",
     ]),
     BackCategories() {
       this.$router.push({
@@ -304,13 +310,42 @@ export default {
 
 <style lang="scss" scoped>
 .UpdateItems-content {
-  padding-top: 6%;
+  padding-top: 2%;
+  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  min-height: 593px;
 }
-.UpdateItems-back-categories,
+.containerBtn,
+.Errors {
+  display: block;
+  width: 70%;
+  margin: auto;
+}
+.Errors {
+  margin-bottom: 10px;
+}
+.btn-input:focus,
+.btn-input:active {
+  background: transparent;
+}
+.btn-input {
+  margin-bottom: 20px;
+  background: transparent;
+  text-indent: 10px !important;
+}
+.UpdateItems-btn,
 .UpdateItems-back-menu {
   width: auto;
+  display: inline-block !important;
+  padding-left: 20px;
 }
+.UpdateItems-btn {
+  margin-left: 35%;
+}
+
 .UpdateItems-back-menu {
-  margin-left: auto;
+  margin-left: 5%;
 }
 </style>

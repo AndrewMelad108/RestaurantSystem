@@ -3,18 +3,6 @@
     <navigationComponent class="navbar" />
     <div class="DeleteCategories-content container">
       <div class="row">
-        <button
-          class="btn btn-info DeleteCategories-back-categories col-6"
-          @click="BackCategories()"
-        >
-          Back categories
-        </button>
-        <button
-          class="btn btn-info DeleteCategories-back-menu col-6"
-          @click="BackMenu()"
-        >
-          Back menu
-        </button>
         <div class="location-info text-center mt-2">
           <h1 class="restaurant-title">{{ localName }}</h1>
           <p class="restaurant-title text-muted pt-0">{{ addressName }}</p>
@@ -22,17 +10,20 @@
             Do you want to delete category {{ nameCategory }}
           </p>
           <div class="group-btn">
-            <div class="row">
-              <button
-                class="btn btn-danger delete col-6 w-auto d-block ml-auto"
-                @click="DeleteCategories()"
-              >
-                delete category
-              </button>
-              <button class="btn btn-dark backCategory col-6 w-auto d-block">
-                back
-              </button>
-            </div>
+            <button class="btn btn-danger delete" @click="DeleteCategories()">
+              delete category
+            </button>
+            <router-link
+              :to="{
+                name: 'MenuComp',
+                params: {
+                  restaurantId: locationId,
+                },
+              }"
+              class="btn btn-info DeleteCategories-back-menu"
+            >
+              Back menu
+            </router-link>
           </div>
         </div>
       </div>
@@ -42,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 import navigationComponent from "@/components/Header/navigation.vue";
 import { mapActions, mapMutations, mapState } from "vuex"; // component vuex
 export default {
@@ -71,39 +63,23 @@ export default {
   },
   mounted() {
     this.isUserLogged();
-    // this.accessUserLocations({
-    //   //access user locations
-    //   userId: this.isUserLoggedInId,
-    //   locationId: this.restaurantId,
-    //   redirect: "Home",
-    // });
     this.getLocationName();
     this.getCategoryName();
     this.getDeleteAllItems();
+    this.canAccessUserThisCategory({
+      userId: this.isUserLoggedInId,
+      locationId: this.locationId,
+      id: this.catId,
+      redirect: "Home",
+    });
   },
   methods: {
     ...mapActions(["redirect"]),
     ...mapMutations([
       "isUserLogged",
       "displayCategories",
-      "accessUserLocations",
+      "canAccessUserThisCategory",
     ]),
-    BackCategories() {
-      this.$router.push({
-        name: "ViewCategories",
-        params: {
-          locationId: this.locationId,
-        },
-      });
-    },
-    BackMenu() {
-      this.$router.push({
-        name: "MenuComp",
-        params: {
-          restaurantId: this.restaurantId,
-        },
-      });
-    },
     async getLocationName() {
       let result = await axios.get(
         `http://localhost:3000/locations?userId=${this.isUserLoggedInId}&id=${this.locationId}`
@@ -135,9 +111,27 @@ export default {
         );
       }
       if (result.status == 200) {
-        this.BackCategories();
+        Swal.fire({
+          icon: "success",
+          title: "Delete succeeded",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          this.$router.push({
+            name: "MenuComp",
+            params: {
+              restaurantId: this.locationId,
+            },
+          });
+        }, 2000);
       } else {
-        alert("error");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     },
     async getDeleteAllItems() {
@@ -157,14 +151,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.DeleteCategories-content {
-  padding-top: 10%;
+.DeleteCategories {
+  background-image: url("@/assets/homeImages/table-top-with-background.jpg");
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  min-height: 648px;
 }
-.DeleteCategories-back-categories,
+.delete,
 .DeleteCategories-back-menu {
-  width: auto;
+  margin: 35px 0;
 }
 .DeleteCategories-back-menu {
-  margin-left: auto;
+  margin-left: 25px;
 }
 </style>

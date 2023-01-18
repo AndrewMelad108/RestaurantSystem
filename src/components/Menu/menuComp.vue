@@ -119,13 +119,18 @@ export default {
       id: this.isUserLoggedInId,
       location: this.restaurantId,
     });
+    this.accessUserLocation({
+      userId: this.isUserLoggedInId,
+      locationId: this.restaurantId,
+      redirect: "Home",
+    });
   },
   methods: {
     ...mapActions(["redirect"]),
     ...mapMutations([
       "isUserLogged",
       "displayCategories",
-      "accessUserLocations",
+      "accessUserLocation",
     ]),
     async displayLocations() {
       let result = await axios.get(

@@ -6,7 +6,6 @@ const state = {
   isUserLoggedInId: "",
   numOfCategories: "",
   listOfCategories: [],
-  listOfAllCategories: [],
   listOfLocations: [],
   ThisLocation: [],
   listOfItems: [],
@@ -66,32 +65,35 @@ const mutations = {
   async accessUserLocation(state, payload) {
     //access location by special user
     let location = await axios.get(
-      `   http://localhost:3000/locations?userId=${payload.userId}&id=${payload.locationId}`
+      `http://localhost:3000/locations?userId=${payload.userId}&id=${payload.locationId}`
     );
     if (location.status == 200) {
       state.ThisLocation = location.data;
       let locationLength = state.ThisLocation.length;
+      console.log(locationLength);
       if (locationLength == 0) {
         //not empty
         this.commit("redirect", payload.redirect);
       }
     } else {
-      alert(" location is add by user");
+      console.log(" location is add by user");
     }
   },
-  async accessUserThisCategories(state, payload) {
+  async canAccessUserThisCategory(state, payload) {
     //access categories by special user
     let categories = await axios.get(
       `http://localhost:3000/categories?userId=${payload.userId}&id=${payload.locationId}&id=${payload.id}`
     );
     if (categories.status == 200) {
       state.listOfCategories = categories.data;
-      if (state.listOfCategories.length !== 1) {
+      let categoryLength = state.listOfCategories.length;
+      console.log(categoryLength);
+      if (categoryLength == 0) {
         //not empty
         this.commit("redirect", payload.redirect);
       }
     } else {
-      alert("no categories");
+      console.log(" home");
     }
   },
   async canAccessUserThisItems(state, payload) {
@@ -100,10 +102,10 @@ const mutations = {
       `http://localhost:3000/items?userId=${payload.userId}&locationId=${payload.locationId}&catId=${payload.catId}`
     );
     if (items.status == 200) {
-      state.listOfItems = items.data;
-      let lengthOfItems = state.listOfItems.length;
+      state.listOfAllItems = items.data;
+      let lengthOfItems = state.listOfAllItems.length;
       console.log(lengthOfItems);
-      if (lengthOfItems === 0) {
+      if (lengthOfItems == 0) {
         this.commit("redirect", payload.redirect);
       }
     } else {

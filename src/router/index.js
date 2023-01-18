@@ -96,7 +96,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/:restaurantId",
+    path: "/Menu/loc/:restaurantId",
     name: "MenuComp",
     component: MenuComp,
     meta: {
@@ -104,7 +104,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/AddCategories/:locationId",
+    path: "/Menu/AddCategories/loc/:locationId",
     name: "AddCategories",
     component: AddCategories,
     meta: {
@@ -112,7 +112,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/UpdateCategories/:locationId/:catId",
+    path: "/Menu/UpdateCategories/loc/:locationId/catId/:catId",
     name: "UpdateCategories",
     component: UpdateCategories,
     meta: {
@@ -120,7 +120,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/delete/:locationId/:catId",
+    path: "/Menu/delete/loc/:locationId/category/:catId",
     name: "DeleteCategories",
     component: DeleteCategories,
     meta: {
@@ -128,7 +128,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/DeleteAllCategories/:locationId",
+    path: "/Menu/DeleteAllCategories/:locationId",
     name: "DeleteAllCategories",
     component: DeleteAllCategories,
     meta: {
@@ -136,7 +136,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/add/item/:locationId",
+    path: "/Menu/add/item/loc/:locationId",
     name: "addItems",
     component: addItems,
     meta: {
@@ -152,7 +152,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/delete/loc/:locationId/item/:itemId",
+    path: "/Menu/delete/item/:itemId/loc/:locationId",
     name: "DeleteItem",
     component: DeleteItem,
     meta: {
@@ -160,7 +160,7 @@ const routes = [
     },
   },
   {
-    path: "/MenuComp/display/loc/:locationId/category/:catId",
+    path: "/Menu/display/loc/:locationId/category/:catId",
     name: "ItemsCategory",
     component: ItemsCategory,
     meta: {
