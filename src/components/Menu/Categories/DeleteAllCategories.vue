@@ -34,6 +34,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 import { mapActions, mapMutations } from "vuex"; // component vuex
 import navigationComponent from "@/components/Header/navigation.vue";
 export default {
@@ -80,30 +81,42 @@ export default {
     ...mapActions(["redirect"]),
     ...mapMutations(["isUserLogged", "accessUserLocation"]),
     async DeleteAllCategories() {
+      let allResultItems = [];
+      for (let v = 0; v < this.listAllItems.length; v++) {
+        let result = await axios.delete(
+          `http://localhost:3000/items/${this.listAllItems[v]}`
+        );
+
+        if (result.status == 200 && allResultItems.include(true)) {
+          allResultItems.push(true);
+        } else {
+          allResultItems.push(false);
+        }
+      }
       let allResultCategories = [];
       for (let i = 0; i < this.listAllCategories.length; i++) {
         let result = await axios.delete(
           `http://localhost:3000/categories/${this.listAllCategories[i]}`
         );
 
-        if (result.status == 201) {
+        if (result.status == 200) {
           allResultCategories.push(true);
-          this.redirect("Home");
+          Swal.fire({
+            icon: "success",
+            title: "Delete succeeded",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(() => {
+            this.$router.push({
+              name: "MenuComp",
+              params: {
+                restaurantId: this.locationId,
+              },
+            });
+          }, 2000);
         } else {
           allResultCategories.push(false);
-        }
-      }
-      let allResultItems = [];
-      for (let v = 0; v < this.listAllCategories.length; v++) {
-        let result = await axios.delete(
-          `http://localhost:3000/items/${this.listAllItems[v]}`
-        );
-
-        if (result.status == 201) {
-          allResultItems.push(true);
-          this.redirect("Home");
-        } else {
-          allResultItems.push(false);
         }
       }
     },

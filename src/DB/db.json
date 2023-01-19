@@ -27,65 +27,22 @@
   ],
   "locations": [
     {
-      "nameRestaurant": "Foot Restaurant",
+      "nameRestaurant": "Foot Restaurantqw",
       "phoneRestaurant": "asd@asd.com",
       "addressRestaurant": "asd@asd.com",
       "userId": 7,
       "id": 16
+    },
+    {
+      "nameRestaurant": "asdddd red",
+      "phoneRestaurant": "12345678910",
+      "addressRestaurant": "xcvxcvxcvxc",
+      "userId": 7,
+      "id": 17
     }
   ],
-  "categories": [
-    {
-      "name": "BreakFast",
-      "userId": 7,
-      "locationId": 16,
-      "id": 1
-    },
-    {
-      "name": "Lunch",
-      "userId": 7,
-      "locationId": 16,
-      "id": 2
-    },
-    {
-      "name": "Dinner",
-      "userId": 7,
-      "locationId": 16,
-      "id": 3
-    }
-  ],
-  "items": [
-    {
-      "name": "food",
-      "Quantities": 12,
-      "Price": "123.00",
-      "Description": "daszsczxczxczxczxczxc",
-      "catId": 1,
-      "userId": 7,
-      "locationId": "16",
-      "id": 1
-    },
-    {
-      "name": "food9",
-      "Quantities": 55,
-      "Price": "1235.00",
-      "Description": "ggcvncxfgxjghbdzfhbzd",
-      "catId": 1,
-      "userId": 7,
-      "locationId": 16,
-      "id": 3
-    },
-    {
-      "name": "food8",
-      "Quantities": 543543,
-      "Price": "43453453.00",
-      "Description": "xvbvcbccvbgfhfgjgfjf",
-      "catId": 1,
-      "userId": 7,
-      "locationId": 16,
-      "id": 4
-    }
-  ],
+  "categories": [],
+  "items": [],
   "contactUs": [
     {
       "name": "sadasdasd",
@@ -121,6 +78,34 @@
       "phone": "",
       "description": "",
       "id": 5
+    },
+    {
+      "name": "XZCXZCZ",
+      "email": "HFGHFGHFHFH",
+      "phone": "CXZGHFHFG",
+      "description": "FGHFGHFGHFGHFGHFG",
+      "id": 6
+    },
+    {
+      "name": "sdfsfsf",
+      "email": "asd@asd.com",
+      "phone": "sdfsfdsf",
+      "description": "sfdfsfsdfsdf",
+      "id": 7
+    },
+    {
+      "name": "zxczxczx",
+      "email": "asd@asd.com",
+      "phone": "zxczxczx",
+      "description": "zxczxczx",
+      "id": 8
+    },
+    {
+      "name": "xzczxczx",
+      "email": "asd@asd.com",
+      "phone": "zxczxzx",
+      "description": "zxzxcczx",
+      "id": 9
     }
   ]
 }
