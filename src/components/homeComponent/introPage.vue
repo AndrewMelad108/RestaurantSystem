@@ -5,12 +5,7 @@
         If you would like to see the restaurants of the guest and know more
         about the restaurants and their places and their restaurants, click on
 
-        <button
-          class="intro-restaurant-btn btn"
-          @click="redirect('RestaurantsComp')"
-        >
-          show
-        </button>
+        <button class="intro-restaurant-btn btn" @click="show()">show</button>
         <button class="btn intro-restaurant-more"></button>
       </p>
     </section>
@@ -18,14 +13,35 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import Swal from "sweetalert2";
 export default {
   name: "introPage",
   data: () => {
     return {};
   },
+  computed: {
+    ...mapGetters(["isUserLoggedInCheck"]),
+  },
+  mounted() {
+    this.isUserLogged();
+    console.log(this.isUserLoggedInCheck);
+  },
   methods: {
     ...mapActions(["redirect"]),
+    ...mapMutations(["isUserLogged"]),
+    show() {
+      if (this.isUserLoggedInCheck == true) {
+        this.redirect("RestaurantsComp");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Please login Your Account",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    },
   },
 };
 </script>

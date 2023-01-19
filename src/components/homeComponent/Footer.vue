@@ -1,5 +1,7 @@
 <template>
-  <div class="footer text-center">copyright©:2023 Your Template FAMR .lnc</div>
+  <div class="footer text-center">
+    copyright©:2023 Your Template EL DODO .lnc
+  </div>
 </template>
 
 <script>

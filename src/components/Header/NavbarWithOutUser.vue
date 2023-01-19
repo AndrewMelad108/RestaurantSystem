@@ -2,7 +2,7 @@
   <div class="Navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-content">
       <router-link :to="{ name: 'Home' }" class="navbar-brand">
-        FAMR
+        EL DODO
       </router-link>
 
       <button

@@ -63,7 +63,7 @@
           {{ v$.password.$errors[0].$message }}
         </span>
         <button class="btn btn-primary" type="submit" @click="updateProfile()">
-          edit
+          UPDATE
         </button>
       </form>
     </div>
@@ -151,7 +151,7 @@ export default {
   background-size: cover;
   background-attachment: center center;
   width: 100%;
-  min-height: 590px;
+  min-height: 100vh;
 }
 
 .updateProfile-form {

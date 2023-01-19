@@ -12,7 +12,7 @@ const state = {
   ThisItem: [],
 };
 const getters = {
-  isUserLoggedIn(state) {
+  isUserLoggedInCheck(state) {
     return state.isUserLoggedIn;
   },
 };

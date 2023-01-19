@@ -160,7 +160,7 @@ const routes = [
     },
   },
   {
-    path: "/Menu/delete/item/:itemId/loc/:locationId",
+    path: "/Menu/delete/loc/:locationId/item/:itemId",
     name: "DeleteItem",
     component: DeleteItem,
     meta: {

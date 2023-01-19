@@ -51,7 +51,9 @@
               id="floatingTextarea"
               v-model.trim="description"
             ></textarea>
-            <label for="floatingTextarea">Enter Description About page</label>
+            <label for="floatingTextarea p-2"
+              >Enter Description About page</label
+            >
           </div>
           <button class="btn btn-danger btn-contact" @click="Contact">
             Contact Us
@@ -110,6 +112,9 @@ h3,
 .title-section {
   padding: 5px 0;
   font-size: 25px;
+}
+.form-floating > label {
+  margin-left: 10px !important;
 }
 .contact-us {
   background: url("@/assets/homeImages/vegetables-set-left-black-slate.jpg")

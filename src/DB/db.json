@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "Name": "asd@asd.com",
+      "Name": "andrew melad",
       "Password": "asd@asd.com",
       "Email": "asd@asd.com",
       "id": 7
@@ -26,13 +26,6 @@
     }
   ],
   "locations": [
-    {
-      "nameRestaurant": "xzvxzv442224",
-      "phoneRestaurant": 535355424242,
-      "addressRestaurant": "24242424242424",
-      "userId": 7,
-      "id": 4
-    },
     {
       "nameRestaurant": "Foot Restaurant",
       "phoneRestaurant": "asd@asd.com",
@@ -59,23 +52,11 @@
       "userId": 7,
       "locationId": 16,
       "id": 3
-    },
-    {
-      "name": "Fred Check",
-      "userId": 7,
-      "locationId": 16,
-      "id": 4
-    },
-    {
-      "name": "fast food",
-      "userId": 7,
-      "locationId": 16,
-      "id": 5
     }
   ],
   "items": [
     {
-      "name": "food1",
+      "name": "food",
       "Quantities": 12,
       "Price": "123.00",
       "Description": "daszsczxczxczxczxczxc",
@@ -103,26 +84,6 @@
       "userId": 7,
       "locationId": 16,
       "id": 4
-    },
-    {
-      "name": "food1",
-      "Quantities": 11,
-      "Price": "12.00",
-      "Description": "22222222222222222222222",
-      "catId": 1,
-      "userId": 7,
-      "locationId": 16,
-      "id": 5
-    },
-    {
-      "name": "qwe",
-      "Quantities": 12,
-      "Price": "12.00",
-      "Description": "12222222222222222222222",
-      "catId": 1,
-      "userId": 7,
-      "locationId": 16,
-      "id": 6
     }
   ],
   "contactUs": [
@@ -139,6 +100,27 @@
       "phone": "",
       "description": "",
       "id": 2
+    },
+    {
+      "name": "zxvcxvxcv",
+      "email": "cxvcxvxcvcvxcv",
+      "phone": "cxvcxvxcvcxv",
+      "description": "AScadcdcvvsfvfsvfvcx",
+      "id": 3
+    },
+    {
+      "name": "XZCZXCZX",
+      "email": "ZCZXCZX",
+      "phone": "XXXCZXCZXC",
+      "description": "ZXCZXCZXCX",
+      "id": 4
+    },
+    {
+      "name": "",
+      "email": "",
+      "phone": "",
+      "description": "",
+      "id": 5
     }
   ]
 }

@@ -44,7 +44,7 @@
           </label>
         </div>
         <button class="btn btn-primary" type="submit" @click="Profile()">
-          UpdateProfile
+          EDIT
         </button>
       </form>
     </div>

@@ -26,7 +26,7 @@ export default {
   background-size: cover;
   background-attachment: center center;
   width: 100%;
-  min-height: 590px;
+  min-height: 100vh;
   padding: 5% 25%;
 }
 </style>

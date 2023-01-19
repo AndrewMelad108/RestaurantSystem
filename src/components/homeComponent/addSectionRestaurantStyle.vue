@@ -8,9 +8,7 @@
           If you would like to add a restaurant or access the restaurant's data
           and make your own modification, click on the Add button
         </p>
-        <button class="btn-add" @click="redirect('addRestaurantLocation')">
-          ADD
-        </button>
+        <button class="btn-add" @click="add()">ADD</button>
       </div>
       <div class="addRestaurantStyle-image col-5">
         <img
@@ -24,14 +22,35 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import Swal from "sweetalert2";
 export default {
   name: "addRestaurantStyle",
   data: () => {
     return {};
   },
+  computed: {
+    ...mapGetters(["isUserLoggedInCheck"]),
+  },
+  mounted() {
+    this.isUserLogged();
+    console.log(this.isUserLoggedInCheck);
+  },
   methods: {
     ...mapActions(["redirect"]),
+    ...mapMutations(["isUserLogged"]),
+    add() {
+      if (this.isUserLoggedInCheck == true) {
+        this.redirect("addRestaurantLocation");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Please login Your Account",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    },
   },
 };
 </script>

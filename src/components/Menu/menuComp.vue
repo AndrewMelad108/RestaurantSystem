@@ -163,7 +163,7 @@ export default {
   width: 100%;
   background-size: cover;
   background-position: center center;
-  min-height: 535px;
+  height: 100vh !important;
 }
 .menuContent-add-item,
 .menuContent-add-categories {

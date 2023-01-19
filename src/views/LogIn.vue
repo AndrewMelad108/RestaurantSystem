@@ -102,10 +102,13 @@ export default {
       this.v$.$validate(); //run function validations
       if (!this.v$.$error) {
         let result = await axios.get(
-          `http://localhost:3000/users?Email=${this.state.email}&Password=${this.state.password} `
+          `http://localhost:3000/users?Email=${this.state.email}&Password=${this.state.password}`
         );
         if (result.status == 200 && result.data.length > 0) {
+          console.log(result.data);
+
           localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+
           Swal.fire({
             icon: "success",
             title: "success add user",

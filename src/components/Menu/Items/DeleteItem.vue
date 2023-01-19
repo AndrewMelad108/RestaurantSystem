@@ -63,13 +63,19 @@ export default {
     this.isUserLogged();
     this.getLocationName();
     this.getItemName();
+    this.canAccessUserThisItem({
+      userId: this.isUserLoggedInId,
+      locationId: this.locationId,
+      id: this.itemId,
+      redirect: "Home",
+    });
   },
   methods: {
     ...mapActions(["redirect"]),
     ...mapMutations([
       "isUserLogged",
       "displayCategories",
-      "accessUserLocations",
+      "canAccessUserThisItem",
     ]),
     BackCategories() {
       this.$router.push({
